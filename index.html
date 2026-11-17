@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Гамид & Ума · 26 ноября 2026</title>
+  <meta name="description" content="Приглашение на свадьбу Гамида и Умы. 26 ноября 2026, «Рамина Холл», 16:00">
+  <meta property="og:title" content="Гамид & Ума · 26 ноября 2026">
+  <meta property="og:description" content="Приглашение на свадьбу. «Рамина Холл», начало в 16:00">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://atmosferaprintt.github.io/gamid-uma/assets/og.jpg">
+  <meta name="theme-color" content="#8C8780">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cormorant+SC:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" href="assets/EkaterinaVelikaya.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="locked">
+
+  <!-- Заставка: бархатный занавес с кистями, открывается по нажатию -->
+  <div id="stage" aria-label="Приглашение закрыто занавесом">
+    <div class="pelmet"><span class="braid"></span></div>
+    <div class="curtain left"><div class="tieback" data-side="left"></div></div>
+    <div class="curtain right"><div class="tieback" data-side="right"></div></div>
+    <div class="seal-wrap">
+      <div class="seal" aria-hidden="true"><span>Г<i>&</i>У</span></div>
+      <div class="seal-card">
+        <div class="sc-small">приглашение на свадьбу</div>
+        <div class="sc-date">26 · 11 · 2026</div>
+        <div class="sc-names">Гамид & Ума</div>
+      </div>
+      <button id="open" class="btn">Открыть приглашение</button>
+    </div>
+  </div>
+
+  <main id="page">
+    <!-- Обложка -->
+    <section class="hero">
+      <img class="garland" src="assets/eucalyptus.jpg" alt="">
+      <div class="kicker reveal">приглашение на свадьбу</div>
+      <h1 class="names reveal">
+        <span>Гамид</span>
+        <span class="amp" aria-label="и">&</span>
+        <span>Ума</span>
+      </h1>
+      <div class="rule reveal"><i></i></div>
+      <div class="hero-date reveal">26 ноября 2026</div>
+      <div class="hero-sub reveal">четверг · 16:00</div>
+      <div class="scroll-hint" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- Приглашение -->
+    <section class="letter">
+      <div class="kicker reveal">дорогие родные и друзья</div>
+      <p class="lead reveal">Семья Рамазановых с радостью приглашает вас на&nbsp;свадьбу <b>Гамида и Умы</b>.</p>
+      <p class="reveal">Этот день станет для нас по-настоящему счастливым, если вы разделите его вместе с&nbsp;нами.</p>
+      <div class="sign reveal">
+        <div class="sign-small">с уважением,</div>
+        <div class="sign-script">семья Рамазановых</div>
+      </div>
+    </section>
+
+    <!-- Дата -->
+    <section class="date">
+      <div class="kicker reveal">дата торжества</div>
+      <div class="cal reveal" id="cal"></div>
+      <div class="time reveal">Начало торжества в <b>16:00</b></div>
+    </section>
+
+    <!-- Место -->
+    <section class="place">
+      <div class="kicker reveal">место проведения</div>
+      <figure class="arch reveal"><img src="assets/chandelier.jpg" alt="" loading="lazy"></figure>
+      <h2 class="venue reveal">Рамина Холл</h2>
+      <div class="address reveal">ул. Хаджи Булача, 10, Махачкала</div>
+      <a class="btn btn-line reveal" id="map" target="_blank" rel="noopener">Открыть на карте</a>
+    </section>
+
+    <!-- Без детей -->
+    <section class="adults">
+      <div class="frame reveal">
+        <div class="kicker">вечер только для взрослых</div>
+        <p>Мы очень любим ваших малышей, но этот вечер задуман только для взрослых. Будем благодарны, если вы придёте без&nbsp;детей.</p>
+      </div>
+    </section>
+
+    <!-- Подтверждение -->
+    <section class="rsvp" id="rsvp">
+      <div class="kicker reveal">подтвердите присутствие</div>
+      <p class="reveal">Пожалуйста, ответьте заранее, чтобы мы подготовили для вас место.</p>
+      <form id="rsvp-form" class="reveal" novalidate>
+        <label class="field">
+          <span>Ваше имя и фамилия</span>
+          <input name="name" type="text" autocomplete="name" placeholder="Например: Мадина Алиева" required>
+        </label>
+        <div class="field">
+          <span>Вы придёте?</span>
+          <div class="choice">
+            <label><input type="radio" name="go" value="yes" required><b>С радостью приду</b></label>
+            <label><input type="radio" name="go" value="no"><b>К сожалению, не смогу</b></label>
+          </div>
+        </div>
+        <div class="field guests hidden">
+          <span>Сколько вас будет?</span>
+          <div class="stepper">
+            <button type="button" data-d="-1" aria-label="Меньше">−</button>
+            <output name="count">1</output>
+            <button type="button" data-d="1" aria-label="Больше">+</button>
+          </div>
+          <small>Только взрослые: вечер без детей</small>
+        </div>
+        <label class="field">
+          <span>Пожелание молодым <em>(необязательно)</em></span>
+          <textarea name="note" rows="2" placeholder="Пара тёплых слов"></textarea>
+        </label>
+        <div class="form-error" hidden></div>
+        <button class="btn" type="submit">Отправить ответ</button>
+        <small class="how">Откроется WhatsApp с готовым сообщением: останется нажать «Отправить».</small>
+      </form>
+      <div class="thanks" hidden>
+        <div class="sign-script">Спасибо!</div>
+        <p></p>
+        <a class="btn" id="wa-again" target="_blank" rel="noopener">Открыть WhatsApp</a>
+        <div><button class="link" type="button" id="again">Изменить ответ</button></div>
+      </div>
+    </section>
+
+    <!-- Обратный отсчёт -->
+    <section class="countdown">
+      <div class="kicker reveal">до свадьбы осталось</div>
+      <div class="cd reveal" id="cd">
+        <div><b data-u="d">0</b><span>дней</span></div>
+        <div><b data-u="h">0</b><span>часов</span></div>
+        <div><b data-u="m">0</b><span>минут</span></div>
+        <div><b data-u="s">0</b><span>секунд</span></div>
+      </div>
+    </section>
+
+    <!-- Финал -->
+    <section class="finale">
+      <img class="finale-img" src="assets/peony-wide.jpg" alt="">
+      <div class="finale-text">
+        <div class="names small reveal">Ждём вас!</div>
+        <div class="sign reveal">
+          <div class="sign-small">с уважением,</div>
+          <div class="sign-script">семья Рамазановых</div>
+        </div>
+        <div class="footer-date reveal">26 · 11 · 2026</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
