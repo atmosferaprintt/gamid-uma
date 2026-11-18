@@ -22,37 +22,56 @@ function bezier(x1, y1, x2, y2) {
 }
 const easeCurtain = bezier(.62, .04, .22, 1);
 
-/* ---------- заставка: бархатный занавес ---------- */
+/* ---------- заставка: имена на атласном занавесе ---------- */
 (function cover() {
   const cover = document.getElementById('cover');
   const canvas = document.getElementById('curtain-gl');
-  const gl = window.Velvet && Velvet.create(canvas, { mode: 0, base: [.5, .462, .43], sheen: [.47, .44, .41], maxDpr: 1.5 });
+  const btn = document.getElementById('open');
+  const theme = document.querySelector('meta[name="theme-color"]');
+  const gl = window.Satin && Satin.create(canvas, { left: 'cover-left.webp', right: 'cover-right.webp' });
   if (!gl) { cover.classList.add('nogl'); canvas.remove(); }
+  const st = { time: 11, open: 0 };
+  let glOn = false;
+  const paint = () => { if (gl.draw(st) && !glOn) { glOn = true; cover.classList.add('gl-on'); } };
 
-  let opened = false, raf = 0, last = 0;
-  const st = { time: 0, open: 0, vel: 0 };
-  // низ полотна догоняет верх на пружине: при разгоне отстаёт, при остановке чуть перелетает
-  let pb = 0, pv = 0, start = 0;
-  const DUR = 2600;
+  // буквы имён и даты: каждая в своей маске, выезжают по очереди
+  let n = 0;
+  cover.querySelectorAll('[data-split]').forEach((el) => {
+    const text = el.textContent.trim();
+    el.textContent = '';
+    for (const c of text) {
+      const outer = document.createElement('span');
+      outer.className = 'ch'; outer.setAttribute('aria-hidden', 'true'); outer.style.setProperty('--i', n++);
+      const inner = document.createElement('span'); inner.textContent = c;
+      outer.appendChild(inner); el.appendChild(outer);
+    }
+  });
+  let readied = false;
+  const ready = () => { if (readied) return; readied = true; requestAnimationFrame(() => cover.classList.add('ready')); };
+  (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(ready);
+  setTimeout(ready, 1400);
+
+  const easeInOut = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const DUR = 2300;
+  let opened = false, raf = 0, last = 0, start = 0;
 
   function frame(now) {
     raf = requestAnimationFrame(frame);
-    const dt = Math.min(.05, last ? (now - last) / 1000 : .016);
+    if (document.hidden) return;
     if (!opened && now - last < 32) return; // пока ждём нажатия, хватает 30 кадров в секунду
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016);
     last = now;
     st.time += dt;
     if (opened) {
-      st.open = easeCurtain((now - start) / DUR);
-      for (let i = 0; i < 2; i++) { const h = dt / 2; pv += (60 * (st.open - pb) - 10 * pv) * h; pb += pv * h; }
-      st.vel = (st.open - pb) * 7;
-      if (now - start > DUR + 500) { finish(); return; }
+      const p = Math.min(1, Math.max(0, (now - start) / DUR));
+      st.open = easeInOut(p);
+      if (p >= 1) { finish(); return; }
     }
-    gl.draw(st);
+    paint();
   }
   if (gl) {
-    gl.resize();
-    if (reduce) gl.draw(st); else raf = requestAnimationFrame(frame);
-    window.addEventListener('resize', () => { gl.resize(); if (reduce || !raf) gl.draw(st); });
+    if (reduce) gl.whenReady.then(paint); else raf = requestAnimationFrame(frame);
+    window.addEventListener('resize', () => { gl.resize(); if (reduce) paint(); });
   }
 
   function finish() {
@@ -61,23 +80,80 @@ const easeCurtain = bezier(.62, .04, .22, 1);
     setTimeout(() => { if (gl) gl.destroy(); cover.remove(); }, 600);
   }
 
-  function open() {
+  function open(e) {
     if (opened) return;
     opened = true;
     cover.classList.add('open');
-    setTimeout(() => document.body.classList.remove('locked'), reduce ? 0 : 1500);
+    theme.content = '#F3EEE6';
+    setTimeout(() => document.body.classList.remove('locked'), reduce ? 0 : 1300);
     if (!gl || reduce) {
       setTimeout(() => document.body.classList.add('play'), reduce ? 0 : 250);
       setTimeout(startReveals, reduce ? 0 : 1200);
       setTimeout(finish, reduce ? 500 : 2000);
       return;
     }
-    start = performance.now() + 120;
+    start = performance.now();
+    // от точки нажатия по ткани бежит волна, следом вторая из центра
+    const b = document.getElementById('seal').getBoundingClientRect();
+    const x = e && e.clientX ? e.clientX : b.left + b.width / 2;
+    const y = e && e.clientY ? e.clientY : b.top + b.height / 2;
+    gl.ripple(x, y, .7);
+    setTimeout(() => gl.ripple(innerWidth / 2, innerHeight * .42, .35), 320);
     setTimeout(() => document.body.classList.add('play'), 450);
     setTimeout(startReveals, 1900);
   }
-  document.getElementById('open').addEventListener('click', open);
-  cover.addEventListener('click', (e) => { if (!e.target.closest('.cover-card')) open(); });
+  btn.addEventListener('click', (e) => { e.stopPropagation(); open(e); });
+  document.getElementById('seal').addEventListener('click', (e) => { e.stopPropagation(); open(e); });
+  cover.addEventListener('click', open);
+})();
+
+/* ---------- атласные ленты: разворачиваются при появлении, потом тихо струятся ---------- */
+document.querySelectorAll('.ribbon').forEach((box) => {
+  const canvas = box.querySelector('.ribbon-gl');
+  const gl = window.Ribbon && Ribbon.create(canvas, box.dataset.palette);
+  if (!gl) { box.classList.add('nogl'); canvas.remove(); }
+  const st = { time: Math.random() * 20, reveal: reduce ? 1 : 0 };
+  let raf = 0, last = 0, start = 0, shown = false;
+  function frame(now) {
+    raf = requestAnimationFrame(frame);
+    if (document.hidden || now - last < 33) return; // 30 кадров достаточно для медленной ткани
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016);
+    last = now;
+    st.time += dt;
+    if (shown) { const p = Math.min(1, (now - start) / 1800); st.reveal = 1 - Math.pow(1 - p, 3); }
+    gl.draw(st);
+  }
+  new IntersectionObserver(([en]) => {
+    if (en.isIntersecting && !shown) { shown = true; start = performance.now(); box.classList.add('in'); if (gl) gl.resize(); }
+    if (!gl) return;
+    if (reduce) { gl.resize(); gl.draw(st); return; }
+    if (en.isIntersecting && !raf) { last = 0; raf = requestAnimationFrame(frame); }
+    else if (!en.isIntersecting && raf) { cancelAnimationFrame(raf); raf = 0; }
+  }, { threshold: .3 }).observe(box);
+  window.addEventListener('resize', () => { if (gl) { gl.resize(); gl.draw(st); } });
+});
+
+/* ---------- панель выбора: шрифты и дресс-код, выбор сохраняется в ссылке ---------- */
+(function chooser() {
+  const panel = document.querySelector('.chooser');
+  if (!panel) return;
+  const q = new URLSearchParams(location.search);
+  const state = { type: q.get('t') || document.body.dataset.type, dress: q.get('d') || document.body.dataset.dress };
+  function apply() {
+    document.body.dataset.type = state.type;
+    document.body.dataset.dress = state.dress;
+    panel.querySelectorAll('[data-k]').forEach((b) => b.setAttribute('aria-pressed', String(state[b.dataset.k] === b.dataset.v)));
+    const u = new URL(location.href); u.searchParams.set('t', state.type); u.searchParams.set('d', state.dress);
+    history.replaceState(null, '', u);
+    window.dispatchEvent(new Event('resize')); // ленты в показанном варианте пересчитают размер
+  }
+  panel.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    if (b.classList.contains('ch-close')) { panel.classList.add('off'); return; }
+    state[b.dataset.k] = b.dataset.v; apply();
+  });
+  apply();
 })();
 
 /* ---------- пылинки в луче над сценой ---------- */
