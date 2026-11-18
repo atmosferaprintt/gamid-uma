@@ -1,4 +1,4 @@
-/* Гамид и Ума · 26.11.26 · светлая классика: крем, серый бархат, красный акцент */
+/* Гамид и Ума · 26.11.26 · светлая классика: крем, серый бархат, коралловый акцент */
 
 :root {
   --cream: #F3EEE6;          /* точно как фон, под который вырезаны шторы */
@@ -6,8 +6,9 @@
   --ink-soft: #3D3A35;
   --muted: #7A746C;
   --line: #B9B2A8;
-  --red: #AB2A21;
-  --red-deep: #8F1F18;
+  --accent: #C44A2E;         /* коралл, в тон ленте на шторе */
+  --accent-deep: #A63B23;
+  --accent-soft: #DE7A5E;
   --serif: 'Source Serif 4', 'Times New Roman', Georgia, serif;
   --sans: 'Manrope', -apple-system, 'Segoe UI', Roboto, sans-serif;
   /* 1u = сотая ширины колонки (до 560px) */
@@ -76,24 +77,24 @@ button { font: inherit; color: inherit; }
 @keyframes card-in { from { opacity: 0; transform: translate(-50%, -46%); } }
 #cover.open .cover-card { opacity: 0; transform: translate(-50%, -50%) scale(.94); pointer-events: none; }
 .cover-names { font: 460 clamp(32px, 10.4vw, 40px)/1.1 var(--serif); white-space: nowrap; margin: 14px 0 6px; }
-.cover-names i { font-size: .62em; margin: 0 .12em; }
-.cover-date { font: 400 22px/1 var(--serif); letter-spacing: .08em; color: var(--red); margin-bottom: 24px; }
+.cover-names i { font-size: .62em; margin: 0 .12em; color: var(--accent); }
+.cover-date { font: 400 22px/1 var(--serif); letter-spacing: .08em; color: var(--accent); margin-bottom: 24px; }
 
 /* ---------------- общие элементы ---------------- */
 .page { max-width: 560px; margin: 0 auto; overflow: hidden; padding-bottom: 56px; background: var(--cream); }
 .eyebrow {
-  font: 500 12.5px/1.4 var(--serif); letter-spacing: .26em; text-transform: uppercase; color: var(--ink-soft);
+  font: 500 12.5px/1.4 var(--serif); letter-spacing: .26em; text-transform: uppercase; color: var(--accent);
 }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
   width: 100%; min-height: 54px; padding: 12px 22px; border: 0; border-radius: 3px; cursor: pointer;
-  background: var(--red); color: #fff; text-decoration: none;
+  background: var(--accent); color: #fff; text-decoration: none;
   font: 400 20px/1.2 var(--serif); letter-spacing: .01em;
-  box-shadow: 0 8px 20px -10px rgba(143, 31, 24, .7);
+  box-shadow: 0 8px 20px -10px rgba(166, 59, 35, .6);
   transition: transform .2s var(--ease), background .3s;
   -webkit-tap-highlight-color: transparent;
 }
-.btn:hover { background: var(--red-deep); }
+.btn:hover { background: var(--accent-deep); }
 .btn:active { transform: scale(.98); }
 /* блик, пробегающий по кнопке */
 .btn::after {
@@ -107,7 +108,7 @@ button { font: inherit; color: inherit; }
 .block h2 { font-size: clamp(31px, 8.9vw, 44px); line-height: 1.12; letter-spacing: -.005em; }
 .block p { color: var(--ink); font-size: 1.03em; }
 .rule {
-  height: 1px; border: 0; margin: 36px 7.5%; background: var(--line);
+  height: 1px; border: 0; margin: 36px 7.5%; background: linear-gradient(90deg, rgba(222, 122, 94, 0), rgba(222, 122, 94, .55) 30%, rgba(196, 74, 46, .7) 50%, rgba(222, 122, 94, .55) 70%, rgba(222, 122, 94, 0));
   transform: scaleX(0); transition: transform 1.3s var(--ease);
 }
 .rule.in { transform: none; }
@@ -126,15 +127,16 @@ button { font: inherit; color: inherit; }
   background:
     radial-gradient(60% 75% at 0% 30%, rgba(96, 80, 64, .09), rgba(96, 80, 64, 0) 100%),
     radial-gradient(55% 80% at 100% 35%, rgba(96, 80, 64, .09), rgba(96, 80, 64, 0) 100%),
-    linear-gradient(180deg, rgba(96, 80, 64, .05), rgba(96, 80, 64, 0) 22%);
+    linear-gradient(180deg, rgba(96, 80, 64, .05), rgba(96, 80, 64, 0) 22%),
+    radial-gradient(46% 38% at 50% 46%, rgba(232, 140, 108, .10), rgba(232, 140, 108, 0) 100%);
   -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent); mask-image: linear-gradient(180deg, #000 55%, transparent);
 }
 
 .names { padding-top: calc(var(--u) * 22.6); line-height: 1; }
 .names span { display: block; }
 .names .w1, .names .w2 { font-size: calc(var(--u) * 14.6); letter-spacing: -.01em; font-weight: 470; }
-.names .and { font-style: italic; font-weight: 400; font-size: calc(var(--u) * 9.4); margin: calc(var(--u) * 2.1) 0 calc(var(--u) * 2.4); color: var(--ink-soft); }
-.hero .date { margin-top: calc(var(--u) * 7.4); font: 440 calc(var(--u) * 8.6)/1 var(--serif); letter-spacing: .06em; color: var(--red); }
+.names .and { font-style: italic; font-weight: 400; font-size: calc(var(--u) * 9.4); margin: calc(var(--u) * 2.1) 0 calc(var(--u) * 2.4); color: var(--accent); }
+.hero .date { margin-top: calc(var(--u) * 7.4); font: 440 calc(var(--u) * 8.6)/1 var(--serif); letter-spacing: .06em; color: var(--accent); }
 
 /* что происходит после открытия занавеса */
 .hero .a { opacity: 0; transform: translateY(16px); filter: blur(6px); }
@@ -162,7 +164,7 @@ button { font: inherit; color: inherit; }
 .when { font: 400 clamp(22px, 6vw, 28px)/1 var(--serif); letter-spacing: .06em; margin-top: 16px; color: var(--ink); }
 .addr { margin-top: 16px; font-size: .94em; color: var(--muted) !important; }
 .map {
-  display: inline-block; margin-top: 8px; padding: 6px 2px; color: var(--red); text-decoration: none;
+  display: inline-block; margin-top: 8px; padding: 6px 2px; color: var(--accent); text-decoration: none;
   font: 500 12.5px/1.4 var(--serif); letter-spacing: .22em; text-transform: uppercase;
   background: linear-gradient(currentColor, currentColor) 50% 100% / 100% 1px no-repeat;
   transition: background-size .4s var(--ease);
@@ -180,7 +182,7 @@ button { font: inherit; color: inherit; }
   transition: border-color .25s, background .25s, box-shadow .25s; -webkit-appearance: none; appearance: none;
 }
 .inp::placeholder { color: #8E877E; }
-.inp:focus { outline: none; border-color: var(--ink-soft); background: #fff; box-shadow: 0 0 0 4px rgba(171, 42, 33, .08); }
+.inp:focus { outline: none; border-color: var(--ink-soft); background: #fff; box-shadow: 0 0 0 4px rgba(196, 74, 46, .08); }
 .radios { margin: 22px 0 6px; display: grid; gap: 14px; }
 .radio { position: relative; display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 17px; color: var(--ink); -webkit-tap-highlight-color: transparent; }
 .radio input { position: absolute; opacity: 0; pointer-events: none; }
@@ -188,10 +190,10 @@ button { font: inherit; color: inherit; }
   flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1px solid #9B958D; background: rgba(255, 255, 255, .5);
   display: grid; place-items: center; transition: border-color .25s;
 }
-.dot::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--red); transform: scale(0); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
-.radio input:checked + .dot { border-color: var(--red); }
+.dot::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); transform: scale(0); transition: transform .35s cubic-bezier(.3, 1.6, .5, 1); }
+.radio input:checked + .dot { border-color: var(--accent); }
 .radio input:checked + .dot::after { transform: scale(1); }
-.radio input:focus-visible + .dot { box-shadow: 0 0 0 4px rgba(171, 42, 33, .15); }
+.radio input:focus-visible + .dot { box-shadow: 0 0 0 4px rgba(196, 74, 46, .15); }
 
 /* «сколько вас» раскрывается плавно */
 .count { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .5s var(--ease), opacity .4s; }
@@ -203,7 +205,7 @@ button { font: inherit; color: inherit; }
 .stepper button { width: 42px; height: 40px; border: 0; background: none; cursor: pointer; font-size: 20px; color: var(--ink-soft); }
 .stepper output { min-width: 30px; text-align: center; font: 400 21px var(--serif); }
 
-.form-error { margin-top: 14px; color: var(--red); font-size: 15px; }
+.form-error { margin-top: 14px; color: var(--accent); font-size: 15px; }
 .form-error.shake { animation: shake .4s; }
 @keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
 #rsvp-form .btn { margin-top: 24px; }
@@ -211,14 +213,14 @@ button { font: inherit; color: inherit; }
 
 .thanks { text-align: center; animation: rise-soft .8s var(--ease) both; }
 .thanks[hidden] { display: none; }
-.thanks-title { font: italic 400 44px/1 var(--serif); color: var(--red); }
+.thanks-title { font: italic 400 44px/1 var(--serif); color: var(--accent); }
 .thanks p { margin: 14px auto 22px; max-width: 22em; }
 .link { display: block; margin: 14px auto 0; border: 0; background: none; cursor: pointer; color: var(--muted); text-decoration: underline; text-underline-offset: 3px; font-size: 15px; }
 @keyframes rise-soft { from { opacity: 0; transform: translateY(12px); } }
 
 /* ---------------- подпись ---------------- */
 .sign { font-family: var(--serif); font-size: clamp(22px, 6vw, 28px); line-height: 1.3; }
-.sign em { display: block; }
+.sign em { display: block; color: var(--accent); }
 
 /* ---------------- появление при прокрутке ---------------- */
 .rv { opacity: 0; transform: translateY(22px); filter: blur(4px); transition: opacity 1s var(--ease), transform 1.1s var(--ease), filter 1s var(--ease); }
