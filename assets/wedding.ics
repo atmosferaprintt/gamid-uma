@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//gamid-uma//invite//RU
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:gamid-uma-2026-11-26@atmosferaprintt.github.io
+DTSTAMP:20261118T120000Z
+DTSTART:20261126T130000Z
+DTEND:20261126T190000Z
+SUMMARY:Свадьба Гамида и Умы
+LOCATION:Рамина Холл\, ул. Хаджи Булача\, 10\, Ма
+ хачкала
+DESCRIPTION:Начало в 16:00. Приглашение: https://atmosfer
+ aprintt.github.io/gamid-uma/
+BEGIN:VALARM
+TRIGGER:-P1D
+ACTION:DISPLAY
+DESCRIPTION:Завтра свадьба Гамида и Умы
+END:VALARM
+BEGIN:VALARM
+TRIGGER:-PT2H
+ACTION:DISPLAY
+DESCRIPTION:Через 2 часа свадьба Гамида и Умы
+END:VALARM
+END:VEVENT
+END:VCALENDAR
