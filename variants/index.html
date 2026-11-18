@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Гамид и Ума · варианты</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#F3EEE6">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3EEE6'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' text-anchor='middle' fill='%23C44A2E'%3E%D0%93%D0%A3%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400..600&family=Manrope:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #F3EEE6; --ink: #26241F; --muted: #7A746C; --accent: #C44A2E; --line: #DDD4C8 }
+    * { box-sizing: border-box; margin: 0 }
+    body { background: var(--cream); color: var(--ink); font: 16px/1.5 Manrope, system-ui, sans-serif; padding: 48px 16px 64px }
+    header { text-align: center; margin-bottom: 36px }
+    .eyebrow { font: 500 12px/1 Manrope, sans-serif; letter-spacing: .28em; text-transform: uppercase; color: var(--accent) }
+    h1 { font: 450 clamp(34px, 9vw, 52px)/1.1 'Source Serif 4', Georgia, serif; margin: 14px 0 10px }
+    h1 i { color: var(--accent); font-weight: 400 }
+    header p { color: var(--muted) }
+    .grid { display: grid; gap: 28px; max-width: 1080px; margin: 0 auto; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) }
+    a.card { display: block; color: inherit; text-decoration: none; background: #FBF8F3; border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+      box-shadow: 0 1px 2px rgba(38,36,31,.04), 0 12px 32px -18px rgba(38,36,31,.25); transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s }
+    a.card:hover { transform: translateY(-4px); box-shadow: 0 1px 2px rgba(38,36,31,.04), 0 22px 44px -20px rgba(38,36,31,.35) }
+    a.card:active { transform: scale(.985) }
+    .thumb { aspect-ratio: 2 / 3; background: #E9E1D6 center / cover no-repeat }
+    .body { padding: 20px 22px 24px }
+    .n { font: 500 12px/1 Manrope, sans-serif; letter-spacing: .2em; color: var(--accent) }
+    h2 { font: 450 26px/1.2 'Source Serif 4', Georgia, serif; margin: 8px 0 8px }
+    .body p { color: #4A4640; font-size: 15px }
+    .go { display: inline-block; margin-top: 14px; font-weight: 500; color: var(--accent); letter-spacing: .04em }
+    footer { text-align: center; color: var(--muted); font-size: 14px; margin-top: 40px }
+    footer a { color: var(--accent) }
+    @media (prefers-reduced-motion: reduce) { a.card { transition: none } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">варианты приглашения</div>
+    <h1>Гамид <i>и</i> Ума</h1>
+    <p>Откройте каждый с телефона и выберите, какой нравится</p>
+  </header>
+
+  <div class="grid">
+    <a class="card" href="barhat/">
+      <div class="thumb" style="background-image:url(thumbs/barhat.webp)"></div>
+      <div class="body">
+        <div class="n">ВАРИАНТ 1</div>
+        <h2>Бархатный театр</h2>
+        <p>Живой бархатный занавес с лучом света расходится, как в театре. Дальше арка, билет на торжество, календарь с сердцем и анкета на коралловом бархате.</p>
+        <span class="go">Открыть →</span>
+      </div>
+    </a>
+    <a class="card" href="konvert/">
+      <div class="thumb" style="background-image:url(thumbs/konvert.webp)"></div>
+      <div class="body">
+        <div class="n">ВАРИАНТ 2</div>
+        <h2>Письмо с сургучом</h2>
+        <p>Печать трескается, конверт открывается, письмо разворачивается на весь экран. Акварельные разводы, рисунки тушью и бумага с рваными краями.</p>
+        <span class="go">Открыть →</span>
+      </div>
+    </a>
+    <a class="card" href="shelk/">
+      <div class="thumb" style="background-image:url(thumbs/shelk.webp)"></div>
+      <div class="body">
+        <div class="n">ВАРИАНТ 3</div>
+        <h2>Шёлк</h2>
+        <p>Струящийся атлас на весь экран отзывается на касание и меняет цвет. Огромная дата с лентой и карточки, которые ложатся стопкой.</p>
+        <span class="go">Открыть →</span>
+      </div>
+    </a>
+  </div>
+
+  <footer>Нынешняя версия приглашения: <a href="../">открыть</a></footer>
+</body>
+</html>
