@@ -22,19 +22,12 @@ function bezier(x1, y1, x2, y2) {
 }
 const easeCurtain = bezier(.62, .04, .22, 1);
 
-/* ---------- заставка: имена на атласном занавесе ---------- */
+/* ---------- заставка: печать на закрытом занавесе, полотна просто расходятся ---------- */
 (function cover() {
   const cover = document.getElementById('cover');
-  const canvas = document.getElementById('curtain-gl');
-  const btn = document.getElementById('open');
   const theme = document.querySelector('meta[name="theme-color"]');
-  const gl = window.Satin && Satin.create(canvas, { left: 'cover-left.webp', right: 'cover-right.webp' });
-  if (!gl) { cover.classList.add('nogl'); canvas.remove(); }
-  const st = { time: 11, open: 0 };
-  let glOn = false;
-  const paint = () => { if (gl.draw(st) && !glOn) { glOn = true; cover.classList.add('gl-on'); } };
 
-  // буквы имён и даты: каждая в своей маске, выезжают по очереди
+  // цифры даты выезжают по очереди
   let n = 0;
   cover.querySelectorAll('[data-split]').forEach((el) => {
     const text = el.textContent.trim();
@@ -51,59 +44,17 @@ const easeCurtain = bezier(.62, .04, .22, 1);
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(ready);
   setTimeout(ready, 1400);
 
-  const easeInOut = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-  const DUR = 2300;
-  let opened = false, raf = 0, last = 0, start = 0;
-
-  function frame(now) {
-    raf = requestAnimationFrame(frame);
-    if (document.hidden) return;
-    if (!opened && now - last < 32) return; // пока ждём нажатия, хватает 30 кадров в секунду
-    const dt = Math.min(.05, last ? (now - last) / 1000 : .016);
-    last = now;
-    st.time += dt;
-    if (opened) {
-      const p = Math.min(1, Math.max(0, (now - start) / DUR));
-      st.open = easeInOut(p);
-      if (p >= 1) { finish(); return; }
-    }
-    paint();
-  }
-  if (gl) {
-    if (reduce) gl.whenReady.then(paint); else raf = requestAnimationFrame(frame);
-    window.addEventListener('resize', () => { gl.resize(); if (reduce) paint(); });
-  }
-
-  function finish() {
-    cancelAnimationFrame(raf); raf = 0;
-    cover.classList.add('gone');
-    setTimeout(() => { if (gl) gl.destroy(); cover.remove(); }, 600);
-  }
-
-  function open(e) {
+  let opened = false;
+  function open() {
     if (opened) return;
     opened = true;
     cover.classList.add('open');
     theme.content = '#F3EEE6';
+    setTimeout(() => document.body.classList.add('play'), reduce ? 0 : 300);
     setTimeout(() => document.body.classList.remove('locked'), reduce ? 0 : 1300);
-    if (!gl || reduce) {
-      setTimeout(() => document.body.classList.add('play'), reduce ? 0 : 250);
-      setTimeout(startReveals, reduce ? 0 : 1200);
-      setTimeout(finish, reduce ? 500 : 2000);
-      return;
-    }
-    start = performance.now();
-    // от точки нажатия по ткани бежит волна, следом вторая из центра
-    const b = document.getElementById('seal').getBoundingClientRect();
-    const x = e && e.clientX ? e.clientX : b.left + b.width / 2;
-    const y = e && e.clientY ? e.clientY : b.top + b.height / 2;
-    gl.ripple(x, y, .7);
-    setTimeout(() => gl.ripple(innerWidth / 2, innerHeight * .42, .35), 320);
-    setTimeout(() => document.body.classList.add('play'), 450);
-    setTimeout(startReveals, 1900);
+    setTimeout(startReveals, reduce ? 0 : 1400);
+    setTimeout(() => { cover.classList.add('gone'); setTimeout(() => cover.remove(), 600); }, reduce ? 300 : 1900);
   }
-  btn.addEventListener('click', (e) => { e.stopPropagation(); open(e); });
-  document.getElementById('seal').addEventListener('click', (e) => { e.stopPropagation(); open(e); });
   cover.addEventListener('click', open);
 })();
 
@@ -150,7 +101,7 @@ document.querySelectorAll('.ribbon').forEach((box) => {
   panel.addEventListener('click', (e) => {
     const b = e.target.closest('button');
     if (!b) return;
-    if (b.classList.contains('ch-close')) { panel.classList.add('off'); return; }
+    if (b.classList.contains('ch-toggle')) { const o = panel.classList.toggle('open'); b.setAttribute('aria-expanded', String(o)); return; }
     state[b.dataset.k] = b.dataset.v; apply();
   });
   apply();
@@ -223,8 +174,9 @@ function startReveals() { document.querySelectorAll('.rv').forEach((el) => io.ob
   function build() {
     const W = box.clientWidth, H = box.clientHeight, d = 11, R = W / 2;
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-    l.setAttribute('d', `M${d} ${H - d}V${R}A${R - d} ${R - d} 0 0 1 ${W / 2} ${d}`);
-    r.setAttribute('d', `M${W - d} ${H - d}V${R}A${R - d} ${R - d} 0 0 0 ${W / 2} ${d}`);
+    // каждая половина идёт от середины низа, поэтому рамка замкнута и снизу
+    l.setAttribute('d', `M${W / 2} ${H - d}H${d}V${R}A${R - d} ${R - d} 0 0 1 ${W / 2} ${d}`);
+    r.setAttribute('d', `M${W / 2} ${H - d}H${W - d}V${R}A${R - d} ${R - d} 0 0 0 ${W / 2} ${d}`);
   }
   build();
   new ResizeObserver(build).observe(box);
@@ -325,7 +277,7 @@ document.getElementById('map').href = 'https://yandex.ru/maps/?text=' + encodeUR
     thanks.querySelector('p').textContent = (answer.go === 'yes'
       ? `${answer.name}, ждём вас 26 ноября!`
       : `${answer.name}, жаль, что не получится. Спасибо, что ответили!`)
-      + ' Чтобы ответ дошёл, отправьте сообщение в WhatsApp. Если он не открылся сам, нажмите кнопку ниже.';
+      + ' Чтобы ответ дошёл, отправьте сообщение в\u00A0WhatsApp. Если он не\u00A0открылся сам, нажмите кнопку ниже.';
     document.getElementById('wa-again').href = answer.url || '#';
   }
 
