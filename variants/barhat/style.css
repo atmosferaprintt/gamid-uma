@@ -413,18 +413,22 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
 .hem::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: repeating-linear-gradient(90deg, var(--silver) 0 3.2px, rgba(220, 214, 207, .3) 3.2px 4.6px); opacity: .85; }
 
 /* ================= финал ================= */
-.finale { margin-top: 66px; padding-bottom: 64px; font-family: var(--serif); }
+.finale { margin-top: 66px; padding-bottom: 120px; font-family: var(--serif); }
 .finale em { display: block; font: 400 clamp(40px, 11vw, 50px)/1 var(--script); color: var(--accent); }
 .fam { margin-top: 8px; font: 400 clamp(24px, 6.6vw, 30px)/1.25 var(--serif); }
-.mono { position: relative; width: 96px; height: 96px; margin: 32px auto 14px; display: grid; place-items: center; }
-.mono svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-.mono svg * { fill: none; }
-.mono .ring { stroke: var(--accent); stroke-width: .9; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.mono .ring2 { stroke: rgba(196, 74, 46, .28); stroke-width: .7; opacity: 0; }
-.mono.in .ring { stroke-dashoffset: 0; transition: stroke-dashoffset 2s var(--ease-in-out) .2s; }
-.mono.in .ring2 { opacity: 1; transition: opacity .8s ease 1.6s; }
-.mono span { font: 400 30px/1 var(--serif); color: var(--ink); padding-top: 2px; }
-.mono i { font-style: italic; color: var(--accent); margin: 0 2px; }
+/* герб: проявляется из лёгкой дымки, потом по золоту изредка пробегает блик */
+.crest { position: relative; width: min(74%, 320px); aspect-ratio: 760 / 792; margin: 30px auto 22px; }
+.crest img { display: block; width: 100%; height: 100%; filter: drop-shadow(0 10px 18px rgba(120, 84, 40, .22)); }
+.crest.rv { transform: scale(.92); filter: blur(6px); transition: opacity 1.4s var(--ease), transform 1.8s var(--ease-out), filter 1.4s var(--ease); }
+.crest.rv.in { transform: none; filter: none; }
+.crest-sheen {
+  position: absolute; inset: 0; pointer-events: none;
+  -webkit-mask: url(crest.webp) center / 100% 100% no-repeat; mask: url(crest.webp) center / 100% 100% no-repeat;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 246, 222, .7) 50%, transparent 60%) 170% 0 / 260% 100% no-repeat;
+  mix-blend-mode: screen;
+}
+.crest.in .crest-sheen { animation: crest-sheen 6s 1.6s ease-in-out infinite; }
+@keyframes crest-sheen { 0% { background-position: 170% 0; } 30%, 100% { background-position: -70% 0; } }
 .footer-date { font: 400 14px/1 var(--serif); letter-spacing: .3em; color: var(--muted); }
 
 /* ================= появление при прокрутке ================= */
@@ -449,7 +453,8 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
   .cover-text { filter: none !important; transform: none !important; }
   #cover .seal { animation: none !important; opacity: 1; }
   .seal-sheen { display: none; }
-  .draw, .draw-g > *, .arch-line path, .mono .ring, .dc .x, .swash path { stroke-dashoffset: 0 !important; }
+  .draw, .draw-g > *, .arch-line path, .swash path { stroke-dashoffset: 0 !important; }
+  .crest-sheen { display: none; }
 }
 
 /* ================= срок ответа ================= */
