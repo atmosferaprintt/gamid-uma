@@ -22,10 +22,10 @@
   <link rel="preload" href="names-2.svg" as="image">
   <link rel="preload" href="curtain-left.webp" as="image">
   <link rel="preload" href="curtain-right.webp" as="image">
-  <link rel="stylesheet" href="style.css">
-  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big, .arch > *, .days > *, .swatches i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important } .ribbon { background: linear-gradient(100deg, #CFC8BF, #E4DED6 22%, #BFB7AD 46%, #DDD6CD 70%, #C2BAB0) }</style></noscript>
+  <link rel="stylesheet" href="style.css?v=20261119c">
+  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big, .arch > *, .days > *, .fan i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important } .ribbon { background: linear-gradient(100deg, #CFC8BF, #E4DED6 22%, #BFB7AD 46%, #DDD6CD 70%, #C2BAB0) }</style></noscript>
 </head>
-<body class="locked" data-type="1" data-dress="1">
+<body class="locked" data-type="1" data-dress="1" data-kids="1" data-rsvp="1">
 
   <!-- Заставка: имена на закрытом атласном занавесе (WebGL, без него CSS-полотна) -->
   <div id="cover">
@@ -55,7 +55,6 @@
           <img class="ln ln2" src="names-2.svg" width="4476" height="4304" alt="">
         </span>
       </h1>
-      <div class="a date">26.11.26</div>
     </header>
 
     <!-- всё после сцены едет листом поверх неё, поэтому низ штор всегда скрыт -->
@@ -120,41 +119,59 @@
     <section class="act dress band">
       <div class="eyebrow rv">для гостей</div>
       <h2 class="rv">Дресс-код</h2>
-      <p class="rv">Мужчины в&nbsp;костюмах, дамы в&nbsp;вечерних платьях. Единственная просьба: не&nbsp;выбирать чёрный&nbsp;цвет.</p>
-      <!-- вариант 1: палитра атласных тканей -->
+      <!-- вариант 1: веер атласных тканей -->
       <div class="dress-v" data-v="1">
-        <div class="swatches rv" aria-label="Подойдёт любой цвет, кроме чёрного">
-          <i style="--c:#E8D6BC"></i><i style="--c:#DDA9A0"></i><i style="--c:#D46A4E"></i><i style="--c:#A9B39A"></i><i style="--c:#9FB1C4"></i><i style="--c:#B7A6C6"></i><i style="--c:#7E2D36"></i><i class="no" style="--c:#1E1B19"></i>
+        <p class="rv">Мужчины в&nbsp;костюмах, дамы в&nbsp;вечерних платьях. Единственная просьба: не&nbsp;выбирать чёрный&nbsp;цвет.</p>
+        <div class="fan rv" aria-hidden="true">
+          <i style="--c:#E6D3B8;--a:-45deg"></i><i style="--c:#DDA79C;--a:-30deg"></i><i style="--c:#D2694C;--a:-15deg"></i><i style="--c:#A8B298;--a:0deg"></i><i style="--c:#9DAFC2;--a:15deg"></i><i style="--c:#B5A4C4;--a:30deg"></i><i style="--c:#7E2D36;--a:45deg"></i><b></b>
         </div>
         <div class="sw-note rv">любой цвет, <span>кроме чёрного</span></div>
       </div>
-      <!-- вариант 2: для него и для неё -->
+      <!-- вариант 2: открытка в двойной рамке -->
       <div class="dress-v" data-v="2">
+        <div class="dcard rv">
+          <div class="dcard-script">Вечерний стиль</div>
+          <div class="dcard-row"><span>мужчины</span><b>костюм</b></div>
+          <i class="dia" aria-hidden="true"></i>
+          <div class="dcard-row"><span>дамы</span><b>вечернее платье</b></div>
+          <div class="dcard-ask">Единственная просьба: не&nbsp;выбирать чёрный&nbsp;цвет</div>
+        </div>
+      </div>
+      <!-- вариант 3: для него и для неё -->
+      <div class="dress-v" data-v="3">
         <div class="duo rv">
           <div><em>для него</em><b>костюм</b></div>
           <span class="duo-line" aria-hidden="true"></span>
           <div><em>для неё</em><b>вечернее платье</b></div>
         </div>
-        <div class="duo-ask rv">единственная просьба: <span>не&nbsp;выбирать чёрный цвет</span></div>
-      </div>
-      <!-- вариант 3: коралловая атласная лента -->
-      <div class="dress-v" data-v="3">
-        <div class="ribbon ribbon-coral" data-palette="coral">
-          <canvas class="ribbon-gl" aria-hidden="true"></canvas>
-          <div class="r-text">
-            <div class="r-eyebrow">стиль вечера</div>
-            <div class="r-venue">Вечерний</div>
-            <div class="r-when">без чёрного цвета</div>
-          </div>
-        </div>
+        <div class="duo-ask rv">единственная просьба: <span>не&nbsp;выбирать чёрный&nbsp;цвет</span></div>
       </div>
     </section>
 
     <!-- ===== Акт V: маленькая просьба ===== -->
     <section class="act kids">
-      <svg class="bow rv" viewBox="0 0 60 44" aria-hidden="true"><g class="draw-g"><path pathLength="1" d="M30 19C22 9 8.5 8 10 18.5 11.5 27 23.5 25 30 19Z"/><path pathLength="1" d="M30 19c8-10 21.5-11 20-.5C48.5 27 36.5 25 30 19Z"/><path pathLength="1" d="M28 21.5 20.5 40M32 21.5 39.5 40"/><path pathLength="1" d="M30 16.3a3.2 3.2 0 1 1 0 6.4a3.2 3.2 0 1 1 0 -6.4"/></g></svg>
-      <h2 class="rv">Маленькая просьба</h2>
-      <p class="rv">Мы очень любим ваших малышей, но&nbsp;этот вечер хотим провести в&nbsp;кругу взрослых. Надеемся на&nbsp;ваше понимание и&nbsp;будем рады подарить вам вечер&nbsp;отдыха.</p>
+      <!-- вариант 1: бантик и заголовок -->
+      <div class="kids-v" data-v="1">
+        <svg class="bow rv" viewBox="0 0 60 44" aria-hidden="true"><g class="draw-g"><path pathLength="1" d="M30 19C22 9 8.5 8 10 18.5 11.5 27 23.5 25 30 19Z"/><path pathLength="1" d="M30 19c8-10 21.5-11 20-.5C48.5 27 36.5 25 30 19Z"/><path pathLength="1" d="M28 21.5 20.5 40M32 21.5 39.5 40"/><path pathLength="1" d="M30 16.3a3.2 3.2 0 1 1 0 6.4a3.2 3.2 0 1 1 0 -6.4"/></g></svg>
+        <h2 class="rv">Маленькая просьба</h2>
+        <p class="rv">Мы очень любим ваших малышей, но&nbsp;этот вечер хотим провести в&nbsp;кругу взрослых. Надеемся на&nbsp;ваше понимание и&nbsp;будем рады подарить вам вечер&nbsp;отдыха.</p>
+      </div>
+      <!-- вариант 2: медальон -->
+      <div class="kids-v" data-v="2">
+        <div class="oval rv">
+          <div class="oval-script">Маленькая просьба</div>
+          <p>Мы очень любим ваших малышей, но&nbsp;этот вечер хотим провести в&nbsp;кругу взрослых. Надеемся на&nbsp;ваше понимание и&nbsp;будем рады подарить вам вечер&nbsp;отдыха.</p>
+        </div>
+      </div>
+      <!-- вариант 3: цитата между орнаментами -->
+      <div class="kids-v" data-v="3">
+        <div class="quote rv">
+          <span class="orn" aria-hidden="true"></span>
+          <div class="eyebrow">маленькая просьба</div>
+          <p class="q">Мы очень любим ваших малышей, но&nbsp;этот вечер хотим провести в&nbsp;кругу взрослых. Надеемся на&nbsp;ваше понимание и&nbsp;будем рады подарить вам вечер&nbsp;отдыха.</p>
+          <span class="orn" aria-hidden="true"></span>
+        </div>
+      </div>
     </section>
 
     <!-- ===== Акт VI: анкета на бархате ===== -->
@@ -198,13 +215,10 @@
 
     <!-- ===== Финал ===== -->
     <footer class="act finale">
-      <em class="rv">С любовью,</em>
-      <div class="fam rv">семья Рамазановых</div>
-      <div class="crest rv" aria-hidden="true">
+      <div class="crest rv" aria-label="Монограмма Гамида и Умы" role="img">
         <img src="crest.webp" alt="" width="760" height="792" loading="lazy" decoding="async">
         <span class="crest-sheen"></span>
       </div>
-      <div class="footer-date rv">26 · 11 · 2026</div>
     </footer>
     </div>
   </main>
@@ -215,11 +229,13 @@
     <div class="ch-rows">
       <div class="ch-row"><span>Шрифты</span><button type="button" data-k="type" data-v="1">1</button><button type="button" data-k="type" data-v="2">2</button><button type="button" data-k="type" data-v="3">3</button></div>
       <div class="ch-row"><span>Дресс-код</span><button type="button" data-k="dress" data-v="1">1</button><button type="button" data-k="dress" data-v="2">2</button><button type="button" data-k="dress" data-v="3">3</button></div>
+      <div class="ch-row"><span>Про детей</span><button type="button" data-k="kids" data-v="1">1</button><button type="button" data-k="kids" data-v="2">2</button><button type="button" data-k="kids" data-v="3">3</button></div>
+      <div class="ch-row"><span>Анкета</span><button type="button" data-k="rsvp" data-v="1">1</button><button type="button" data-k="rsvp" data-v="2">2</button><button type="button" data-k="rsvp" data-v="3">3</button></div>
     </div>
   </div>
 
-  <script src="ribbon.js"></script>
-  <script src="velvet.js"></script>
-  <script src="app.js"></script>
+  <script src="ribbon.js?v=20261119c"></script>
+  <script src="velvet.js?v=20261119c"></script>
+  <script src="app.js?v=20261119c"></script>
 </body>
 </html>

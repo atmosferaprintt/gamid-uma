@@ -173,6 +173,7 @@ void main() {
     resize();
     return {
       resize,
+      setColors(base, sheen) { gl.uniform3fv(U.uBase, base); gl.uniform3fv(U.uSheen, sheen); },
       draw(st) {
         gl.uniform2f(U.uRes, w, h);
         gl.uniform1f(U.uDpr, dpr);

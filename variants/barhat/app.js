@@ -84,19 +84,21 @@ document.querySelectorAll('.ribbon').forEach((box) => {
   window.addEventListener('resize', () => { if (gl) { gl.resize(); gl.draw(st); } });
 });
 
-/* ---------- панель выбора: шрифты и дресс-код, выбор сохраняется в ссылке ---------- */
+/* ---------- панель выбора вариантов: выбор сохраняется в ссылке ---------- */
 (function chooser() {
   const panel = document.querySelector('.chooser');
   if (!panel) return;
+  const KEYS = { type: 't', dress: 'd', kids: 'k', rsvp: 'r' }; // ключ в body.dataset -> параметр в ссылке
   const q = new URLSearchParams(location.search);
-  const state = { type: q.get('t') || document.body.dataset.type, dress: q.get('d') || document.body.dataset.dress };
+  const state = {};
+  for (const k in KEYS) state[k] = q.get(KEYS[k]) || document.body.dataset[k] || '1';
   function apply() {
-    document.body.dataset.type = state.type;
-    document.body.dataset.dress = state.dress;
+    const u = new URL(location.href);
+    for (const k in KEYS) { document.body.dataset[k] = state[k]; u.searchParams.set(KEYS[k], state[k]); }
     panel.querySelectorAll('[data-k]').forEach((b) => b.setAttribute('aria-pressed', String(state[b.dataset.k] === b.dataset.v)));
-    const u = new URL(location.href); u.searchParams.set('t', state.type); u.searchParams.set('d', state.dress);
     history.replaceState(null, '', u);
-    window.dispatchEvent(new Event('resize')); // ленты в показанном варианте пересчитают размер
+    window.dispatchEvent(new Event('variant'));
+    window.dispatchEvent(new Event('resize'));
   }
   panel.addEventListener('click', (e) => {
     const b = e.target.closest('button');
@@ -162,7 +164,7 @@ document.querySelectorAll('.ribbon').forEach((box) => {
 document.querySelectorAll('.cal .days > *').forEach((d, i) => d.style.setProperty('--i', i));
 const io = new IntersectionObserver((entries) => {
   for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-}, { threshold: .18, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: .08, rootMargin: '0px 0px -30px 0px' });
 // блоки начинают появляться только когда занавес открыт, иначе всё проиграется под ним
 function startReveals() { document.querySelectorAll('.rv').forEach((el) => io.observe(el)); }
 
@@ -216,9 +218,14 @@ document.getElementById('map').href = 'https://yandex.ru/maps/?text=' + encodeUR
   const canvas = sec.querySelector('.velvet-gl');
   let gl = null, raf = 0, last = 0, tried = false;
   const st = { time: 3, open: 0, vel: 0, light: .2 };
+  // цвет бархата по варианту анкеты: 1 — красный, 3 — графитовый; во 2-м бархата нет
+  const PAL = { 1: [[.46, .13, .09], [.62, .26, .19]], 3: [[.3, .29, .275], [.52, .5, .47]] };
+  const pal = () => PAL[document.body.dataset.rsvp] || PAL[1];
+  const off = () => document.body.dataset.rsvp === '2';
+  window.addEventListener('variant', () => { if (gl) { gl.setColors(pal()[0], pal()[1]); if (!off()) gl.draw(st); } });
   function draw(now) {
     raf = requestAnimationFrame(draw);
-    if (now - last < 33) return; // 30 кадров в секунду достаточно для медленного света
+    if (off() || now - last < 33) return; // 30 кадров в секунду достаточно для медленного света
     const dt = last ? Math.min(.1, (now - last) / 1000) : .016; last = now;
     st.time += dt;
     const r = sec.getBoundingClientRect();
@@ -230,7 +237,7 @@ document.getElementById('map').href = 'https://yandex.ru/maps/?text=' + encodeUR
     if (e.isIntersecting) {
       if (!tried) {
         tried = true;
-        gl = window.Velvet && Velvet.create(canvas, { mode: 1, base: [.46, .13, .09], sheen: [.62, .26, .19], maxDpr: 1.25 });
+        gl = window.Velvet && Velvet.create(canvas, { mode: 1, base: pal()[0], sheen: pal()[1], maxDpr: 1.25 });
         if (!gl) { canvas.remove(); sec.classList.add('nogl'); return; }
         window.addEventListener('resize', () => { gl.resize(); gl.draw(st); });
         new ResizeObserver(() => { gl.resize(); gl.draw(st); }).observe(canvas);
