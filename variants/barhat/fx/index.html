@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex">
+  <title>Мерцание · варианты</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F3EEE6'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' text-anchor='middle' fill='%23C44A2E'%3E%D0%93%D0%A3%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #F3EEE6; --ink: #26241F; --soft: #3D3A35; --accent: #C44A2E; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #E4DCD0; color: var(--ink); font: 300 15px/1.55 'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    header { max-width: 1240px; margin: 0 auto; padding: 36px 16px 8px; text-align: center; }
+    h1 { margin: 0; font: 300 clamp(30px, 7vw, 44px)/1.1 'Cormorant Garamond', Georgia, serif; }
+    header p { margin: 10px auto 0; max-width: 34em; color: var(--soft); }
+    .grid { max-width: 1240px; margin: 0 auto; padding: 22px 16px 60px; display: grid; gap: 34px 22px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); justify-items: center; }
+    figure { margin: 0; width: 100%; max-width: 390px; }
+    figcaption { margin-bottom: 12px; min-height: 76px; text-align: center; font-variant-numeric: lining-nums; }
+    figcaption b { display: block; font: 400 26px/1.1 'Cormorant Garamond', Georgia, serif; }
+    figcaption b i { font-style: normal; color: var(--accent); }
+    figcaption span { display: block; margin-top: 4px; font-size: 13.5px; color: var(--soft); }
+    /* кусочек приглашения: крем с текстом и серый бархат анкеты */
+    .card { position: relative; overflow: hidden; border-radius: 14px; background: var(--cream); box-shadow: 0 24px 50px -30px rgba(70, 55, 40, .5); aspect-ratio: 390 / 600; }
+    .cream { position: absolute; left: 0; right: 0; top: 0; height: 58%; padding: 13% 9% 0; text-align: center; }
+    .eb { font: 400 23px/1 'Great Vibes', cursive; color: #A63B23; }
+    .h { margin-top: 8px; font: 300 clamp(30px, 8.6vw, 38px)/1.02 'Cormorant Garamond', Georgia, serif; }
+    .t { margin: 14px auto 0; max-width: 19em; font-size: 14px; line-height: 1.6; color: var(--soft); }
+    .velvet { position: absolute; left: 0; right: 0; bottom: 0; height: 42%; background: url(../rsvp-panel.webp) center 8% / 100% auto no-repeat; display: grid; place-items: center; text-align: center; color: #FFFDF9; }
+    .velvet .h { margin: 18% 0 0; color: #FFFDF9; text-shadow: 0 1px 2px rgba(40, 34, 28, .35); }
+    canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Мерцание: варианты</h1>
+    <p>Каждый вариант показан на кусочке приглашения: светлый фон с текстом и серый бархат анкеты. Выберите номер, поставлю его на весь сайт.</p>
+  </header>
+
+  <main class="grid">
+    <figure>
+      <figcaption><b><i>1</i> · Пылинки</b><span>плывут вверх и мягко мерцают, как в луче на сцене</span></figcaption>
+      <div class="card"><div class="cream"><div class="eb">приглашение</div><div class="h">Дорогие родные<br>и близкие!</div><p class="t">Мы рады пригласить вас на свадьбу наших детей. Это очень важный и трепетный для нас день.</p></div><div class="velvet"><div class="h">Будете ли вы<br>с нами?</div></div><canvas data-fx="dust"></canvas></div>
+    </figure>
+    <figure>
+      <figcaption><b><i>2</i> · Звёздочки</b><span>то тут, то там вспыхивают и гаснут маленькие золотые звёздочки</span></figcaption>
+      <div class="card"><div class="cream"><div class="eb">приглашение</div><div class="h">Дорогие родные<br>и близкие!</div><p class="t">Мы рады пригласить вас на свадьбу наших детей. Это очень важный и трепетный для нас день.</p></div><div class="velvet"><div class="h">Будете ли вы<br>с нами?</div></div><canvas data-fx="stars"></canvas></div>
+    </figure>
+    <figure>
+      <figcaption><b><i>3</i> · Блёстки</b><span>крошечные искорки коротко вспыхивают крестиком, как люрекс на ткани</span></figcaption>
+      <div class="card"><div class="cream"><div class="eb">приглашение</div><div class="h">Дорогие родные<br>и близкие!</div><p class="t">Мы рады пригласить вас на свадьбу наших детей. Это очень важный и трепетный для нас день.</p></div><div class="velvet"><div class="h">Будете ли вы<br>с нами?</div></div><canvas data-fx="glitter"></canvas></div>
+    </figure>
+    <figure>
+      <figcaption><b><i>4</i> · Боке</b><span>большие мягкие пятна света, еле видные, медленно плывут</span></figcaption>
+      <div class="card"><div class="cream"><div class="eb">приглашение</div><div class="h">Дорогие родные<br>и близкие!</div><p class="t">Мы рады пригласить вас на свадьбу наших детей. Это очень важный и трепетный для нас день.</p></div><div class="velvet"><div class="h">Будете ли вы<br>с нами?</div></div><canvas data-fx="bokeh"></canvas></div>
+    </figure>
+    <figure>
+      <figcaption><b><i>5</i> · Золотой снег</b><span>золотистая пыль медленно оседает вниз, покачиваясь</span></figcaption>
+      <div class="card"><div class="cream"><div class="eb">приглашение</div><div class="h">Дорогие родные<br>и близкие!</div><p class="t">Мы рады пригласить вас на свадьбу наших детей. Это очень важный и трепетный для нас день.</p></div><div class="velvet"><div class="h">Будете ли вы<br>с нами?</div></div><canvas data-fx="snow"></canvas></div>
+    </figure>
+    <figure>
+      <figcaption><b><i>6</i> · Без мерцания</b><span>как сейчас на основной ссылке: пылинки только в луче на сцене</span></figcaption>
+      <div class="card"><div class="cream"><div class="eb">приглашение</div><div class="h">Дорогие родные<br>и близкие!</div><p class="t">Мы рады пригласить вас на свадьбу наших детей. Это очень важный и трепетный для нас день.</p></div><div class="velvet"><div class="h">Будете ли вы<br>с нами?</div></div></div>
+    </figure>
+  </main>
+
+  <script src="fx.js"></script>
+  <script>document.querySelectorAll('canvas[data-fx]').forEach((c) => FX.run(c, c.dataset.fx));</script>
+</body>
+</html>
