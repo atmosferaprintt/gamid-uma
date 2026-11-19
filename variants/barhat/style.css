@@ -171,27 +171,33 @@ button { font: inherit; color: inherit; }
 .play .hero::after { opacity: 1; }
 .dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
-.names { position: relative; z-index: 1; line-height: 1; }
-.names span { display: block; }
-.names .w1, .names .w2 { font: 400 calc(var(--u) * 18.4)/1.02 var(--script); color: var(--accent); letter-spacing: 0; }
-.names .and { font: italic 400 calc(var(--u) * 6.4)/1 var(--display); margin: calc(var(--u) * .6) 0 calc(var(--u) * .4); color: var(--ink-soft); }
-/* росчерк под именами: прорисовывается пером после «Ума» */
-.swash { position: relative; z-index: 1; display: block; width: calc(var(--u) * 58); margin: calc(var(--u) * -3.4) auto 0; overflow: visible; }
-.swash path { fill: none; stroke: var(--accent); stroke-width: 1.15; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.play .swash path { transition: stroke-dashoffset 1.7s cubic-bezier(.45, .05, .25, 1) 1.9s; stroke-dashoffset: 0; }
-.hero .date { position: relative; z-index: 1; margin-top: calc(var(--u) * 4.6); font: 500 calc(var(--u) * 8.6)/1 var(--serif); letter-spacing: .06em; color: var(--accent); }
-.cue { position: absolute; z-index: 1; left: 50%; bottom: calc(28px + 4svh); width: 1px; height: 38px; overflow: hidden; background: rgba(196, 74, 46, .18); }
-.cue i { position: absolute; left: 0; top: 0; width: 1px; height: 40%; background: var(--accent); transform: translateY(-100%); animation: cue 2.4s 3.4s var(--ease-in-out) infinite; }
-@keyframes cue { to { transform: translateY(260%); } }
+.names { position: relative; z-index: 1; margin: 0; line-height: 1; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+/* имена: каллиграфия по образцу заказчика, обведённая в вектор (names-1 «Гамид», names-and «и», names-2 «Ума») */
+/* ширина по просвету между шторами: шторы растут с высотой экрана, поэтому учитываем и ширину, и высоту сцены
+   (подобрано замером на 8 экранах, чтобы росчерки не заходили на бант и кисть) */
+.hero { container-type: size; }
+.lettering { position: relative; display: block; width: calc(var(--u) * 60); aspect-ratio: 4476 / 4304; }
+@supports (width: 1cqh) { .lettering { width: clamp(200px, calc(116.3cqw - 25.4cqh - 6px), 450px); } }
+.lettering img { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* появляются слева направо, как будто их пишут пером: маска уезжает вправо */
+.lettering .ln1, .lettering .ln2 {
+  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%); mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+  -webkit-mask-size: 250% 100%; mask-size: 250% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: 100% 0; mask-position: 100% 0;
+}
+.lettering .and { opacity: 0; }
+.play .lettering .ln1 { animation: write 1.5s .55s cubic-bezier(.45, .1, .35, 1) forwards; }
+.play .lettering .and { animation: fade .7s 1.55s ease forwards; }
+.play .lettering .ln2 { animation: write 1.6s 1.75s cubic-bezier(.45, .1, .35, 1) forwards; }
+@keyframes write { to { -webkit-mask-position: 0 0; mask-position: 0 0; } }
+@keyframes fade { to { opacity: 1; } }
+.hero .date { position: relative; z-index: 1; margin-top: calc(var(--u) * 1.6); font: 500 calc(var(--u) * 8.6)/1 var(--serif); letter-spacing: .06em; color: var(--accent); }
 
 /* что происходит после открытия занавеса */
 .hero .a { opacity: 0; transform: translateY(16px); filter: blur(6px); }
 .play .hero .a { animation: rise 1.25s var(--ease) forwards; }
-.play .hero .w1 { animation-delay: .75s; }
-.play .hero .and { animation-delay: 1.05s; }
-.play .hero .w2 { animation-delay: 1.25s; }
-.play .hero .date { animation: rise 1.25s 1.65s var(--ease) forwards, track 1.8s 1.65s var(--ease) both; }
-.play .hero .cue { animation-delay: 2.4s; }
+.play .hero .date { animation: rise 1.25s 2.9s var(--ease) forwards, track 1.8s 2.9s var(--ease) both; }
 @keyframes rise { to { opacity: 1; transform: none; filter: none; } }
 @keyframes track { from { letter-spacing: .32em; } to { letter-spacing: .06em; } }
 
@@ -445,7 +451,8 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
   #cover .ch > span { transform: none !important; }
   .cover-text { filter: none !important; transform: none !important; }
   #cover .seal { opacity: 1; }
-  .draw, .draw-g > *, .arch-line path, .swash path { stroke-dashoffset: 0 !important; }
+  .draw, .draw-g > *, .arch-line path { stroke-dashoffset: 0 !important; }
+  .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important; }
   .crest-sheen { display: none; }
 }
 

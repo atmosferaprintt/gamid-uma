@@ -18,10 +18,12 @@
   <link rel="preload" href="seal.webp" as="image">
   <link rel="preload" href="cover-left.webp" as="image">
   <link rel="preload" href="cover-right.webp" as="image">
+  <link rel="preload" href="names-1.svg" as="image">
+  <link rel="preload" href="names-2.svg" as="image">
   <link rel="preload" href="curtain-left.webp" as="image">
   <link rel="preload" href="curtain-right.webp" as="image">
   <link rel="stylesheet" href="style.css">
-  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big, .arch > *, .days > *, .swatches i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .ribbon { background: linear-gradient(100deg, #CFC8BF, #E4DED6 22%, #BFB7AD 46%, #DDD6CD 70%, #C2BAB0) }</style></noscript>
+  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big, .arch > *, .days > *, .swatches i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important } .ribbon { background: linear-gradient(100deg, #CFC8BF, #E4DED6 22%, #BFB7AD 46%, #DDD6CD 70%, #C2BAB0) }</style></noscript>
 </head>
 <body class="locked" data-type="1" data-dress="1">
 
@@ -46,11 +48,13 @@
       <img class="curtain l" src="curtain-left.webp" alt="">
       <img class="curtain r" src="curtain-right.webp" alt="">
       <h1 class="names">
-        <span class="a w1">Гамид</span>
-        <span class="a and">и</span>
-        <span class="a w2">Ума</span>
+        <span class="sr">Гамид и Ума</span>
+        <span class="lettering" aria-hidden="true">
+          <img class="ln ln1" src="names-1.svg" width="4476" height="4304" alt="">
+          <img class="ln and" src="names-and.svg" width="4476" height="4304" alt="">
+          <img class="ln ln2" src="names-2.svg" width="4476" height="4304" alt="">
+        </span>
       </h1>
-      <svg class="swash" viewBox="0 0 320 64" aria-hidden="true"><path pathLength="1" d="M18 40 C40 47 62 46 86 43 C138 38 198 49 252 41 C280 37 298 30 304 19 C307 12 300 7 292 12"/></svg>
       <div class="a date">26.11.26</div>
     </header>
 
