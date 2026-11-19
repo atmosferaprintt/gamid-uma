@@ -76,14 +76,14 @@ const easeCurtain = bezier(.62, .04, .22, 1);
   function spawn(p, anywhere) {
     p.x = Math.random() * w;
     p.y = anywhere ? Math.random() * h : h + 6;
-    p.r = .5 + Math.random() * 1.3;
+    p.r = .9 + Math.random() * 1.6;
     p.vy = 3 + Math.random() * 7;
     p.ph = Math.random() * 6.28; p.tw = .5 + Math.random() * 1.4;
-    p.a = .18 + Math.random() * .32;
+    p.a = .4 + Math.random() * .45;
     return p;
   }
   size();
-  for (let i = 0; i < 30; i++) P.push(spawn({}, true));
+  for (let i = 0; i < 48; i++) P.push(spawn({}, true));
   function frame(now) {
     requestAnimationFrame(frame);
     if (document.hidden || now - last < 33) return;
@@ -94,11 +94,11 @@ const easeCurtain = bezier(.62, .04, .22, 1);
       p.y -= p.vy * dt;
       p.x += Math.sin(t * .4 + p.ph) * 3 * dt;
       if (p.y < -6) spawn(p, false);
-      const a = p.a * (.5 + .5 * Math.sin(t * p.tw + p.ph));
+      const a = Math.min(1, p.a * (.45 + .55 * Math.sin(t * p.tw + p.ph)));
       // светлая сердцевина видна на бархате, тёплый ореол едва заметен на креме
       const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3.2);
       g.addColorStop(0, `rgba(255, 246, 228, ${a})`);
-      g.addColorStop(.35, `rgba(214, 176, 116, ${a * .32})`);
+      g.addColorStop(.35, `rgba(214, 176, 116, ${a * .6})`);
       g.addColorStop(1, 'rgba(214, 176, 116, 0)');
       ctx.fillStyle = g;
       ctx.fillRect(p.x - p.r * 3.2, p.y - p.r * 3.2, p.r * 6.4, p.r * 6.4);
