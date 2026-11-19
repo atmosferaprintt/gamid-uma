@@ -318,7 +318,7 @@ button { font: inherit; color: inherit; }
 .band::after { bottom: -11px; background: radial-gradient(circle at 50% 0, var(--band) 10.5px, transparent 11px) 50% 0 / 24px 12px repeat-x; }
 .band p { margin: 16px auto 0; max-width: 19em; }
 /* дресс-код */
-.sw-note { margin-top: 26px; font: 500 11px/1.4 var(--sans); letter-spacing: .24em; padding-left: .24em; text-transform: uppercase; color: var(--muted); }
+.sw-note { text-wrap: balance; margin-top: 26px; font: 500 11px/1.4 var(--sans); letter-spacing: .24em; padding-left: .24em; text-transform: uppercase; color: var(--muted); }
 .sw-note span { color: var(--accent); }
 /* чёрный образец ткани, перечёркнутый коралловой линией */
 .no-black {
