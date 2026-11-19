@@ -23,10 +23,10 @@
   <link rel="preload" href="names-2.svg" as="image">
   <link rel="preload" href="curtain-left.webp" as="image">
   <link rel="preload" href="curtain-right.webp" as="image">
-  <link rel="stylesheet" href="style.css?v=20261119r">
-  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .arch > *, .days > * { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering .ln { -webkit-mask: none !important; mask: none !important; opacity: 1 !important }</style></noscript>
+  <link rel="stylesheet" href="style.css?v=20261119x">
+  <noscript><style>#cover { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .arch > *, .days > * { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering .ln { -webkit-mask: none !important; mask: none !important; opacity: 1 !important }</style></noscript>
 </head>
-<body class="locked" data-type="3" data-dress="1">
+<body class="locked" data-type="3">
 
   <!-- Заставка: занавес с тёмным тоном, инициалы, дата, жаккардовая лента -->
   <div id="cover">
@@ -124,30 +124,8 @@
     <section class="act dress band">
       <div class="eyebrow rv">для гостей</div>
       <h2 class="rv">Дресс-код</h2>
-      <!-- вариант 1: текст и перечёркнутый чёрный образец ткани -->
-      <div class="dress-v" data-v="1">
-        <p class="rv">Мужчины в&nbsp;костюмах, дамы в&nbsp;вечерних платьях. Единственная просьба: не&nbsp;выбирать чёрный&nbsp;цвет.</p>
-        <div class="sw-note rv"><i class="no-black" aria-hidden="true"></i>любой цвет, <span>кроме чёрного</span></div>
-      </div>
-      <!-- вариант 2: открытка в двойной рамке -->
-      <div class="dress-v" data-v="2">
-        <div class="dcard rv">
-          <div class="dcard-script">Вечерний стиль</div>
-          <div class="dcard-row"><span>мужчины</span><b>костюм</b></div>
-          <i class="dia" aria-hidden="true"></i>
-          <div class="dcard-row"><span>дамы</span><b>вечернее платье</b></div>
-          <div class="dcard-ask">Единственная просьба: не&nbsp;выбирать чёрный&nbsp;цвет</div>
-        </div>
-      </div>
-      <!-- вариант 3: для него и для неё -->
-      <div class="dress-v" data-v="3">
-        <div class="duo rv">
-          <div><em>для него</em><b>костюм</b></div>
-          <span class="duo-line" aria-hidden="true"></span>
-          <div><em>для неё</em><b>вечернее платье</b></div>
-        </div>
-        <div class="duo-ask rv">единственная просьба: <span>не&nbsp;выбирать чёрный&nbsp;цвет</span></div>
-      </div>
+      <p class="rv">Мужчины в&nbsp;костюмах, дамы в&nbsp;вечерних платьях. Единственная просьба: не&nbsp;выбирать чёрный&nbsp;цвет.</p>
+      <div class="sw-note rv"><i class="no-black" aria-hidden="true"></i>любой цвет, <span>кроме чёрного</span></div>
     </section>
 
     <!-- ===== Акт V: маленькая просьба, цитата между орнаментами ===== -->
@@ -208,14 +186,7 @@
     </div>
   </main>
 
-  <!-- панель выбора вариантов (только на время согласования) -->
-  <div class="chooser" role="group" aria-label="Выбор вариантов">
-    <button type="button" class="ch-toggle" aria-expanded="false">Варианты</button>
-    <div class="ch-rows">
-      <div class="ch-row"><span>Дресс-код</span><button type="button" data-k="dress" data-v="1">1</button><button type="button" data-k="dress" data-v="2">2</button><button type="button" data-k="dress" data-v="3">3</button></div>
-    </div>
-  </div>
 
-  <script src="app.js?v=20261119r"></script>
+  <script src="app.js?v=20261119x"></script>
 </body>
 </html>

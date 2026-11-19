@@ -58,29 +58,29 @@ const easeCurtain = bezier(.62, .04, .22, 1);
   cover.addEventListener('click', open);
 })();
 
-/* ---------- панель выбора вариантов: выбор сохраняется в ссылке ---------- */
-(function chooser() {
-  const panel = document.querySelector('.chooser');
-  if (!panel) return;
-  const KEYS = { dress: 'd' }; // шрифты выбраны: вариант 3, задан в разметке // ключ в body.dataset -> параметр в ссылке
-  const q = new URLSearchParams(location.search);
-  const state = {};
-  for (const k in KEYS) state[k] = q.get(KEYS[k]) || document.body.dataset[k] || '1';
-  function apply() {
-    const u = new URL(location.href);
-    for (const k in KEYS) { document.body.dataset[k] = state[k]; u.searchParams.set(KEYS[k], state[k]); }
-    panel.querySelectorAll('[data-k]').forEach((b) => b.setAttribute('aria-pressed', String(state[b.dataset.k] === b.dataset.v)));
-    history.replaceState(null, '', u);
-    window.dispatchEvent(new Event('variant'));
-    window.dispatchEvent(new Event('resize'));
+/* ---------- мерцающие звёздочки по всему сайту: редкие, чаще по краям, чтобы не лезть в текст ---------- */
+(function sparkles() {
+  if (reduce) return;
+  function fill(box, per) {
+    const layer = document.createElement('div');
+    layer.className = 'sparks'; layer.setAttribute('aria-hidden', 'true');
+    const n = Math.max(6, Math.round(box.offsetHeight / per));
+    for (let i = 0; i < n; i++) {
+      const s = document.createElement('i');
+      s.className = 'spark';
+      const edge = Math.random() < .7;
+      const x = edge ? (Math.random() < .5 ? 3 + Math.random() * 15 : 82 + Math.random() * 15) : 8 + Math.random() * 84;
+      s.style.left = x.toFixed(1) + '%';
+      s.style.top = (Math.random() * 100).toFixed(1) + '%';
+      s.style.setProperty('--s', (10 + Math.random() * 12).toFixed(1) + 'px');
+      s.style.setProperty('--d', (3.2 + Math.random() * 3.6).toFixed(2) + 's');
+      s.style.setProperty('--w', (Math.random() * 7).toFixed(2) + 's');
+      layer.appendChild(s);
+    }
+    box.appendChild(layer);
   }
-  panel.addEventListener('click', (e) => {
-    const b = e.target.closest('button');
-    if (!b) return;
-    if (b.classList.contains('ch-toggle')) { const o = panel.classList.toggle('open'); b.setAttribute('aria-expanded', String(o)); return; }
-    state[b.dataset.k] = b.dataset.v; apply();
-  });
-  apply();
+  fill(document.querySelector('.hero'), 55);
+  fill(document.querySelector('.sheet'), 80);
 })();
 
 /* ---------- пылинки в луче над сценой ---------- */

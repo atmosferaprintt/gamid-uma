@@ -24,6 +24,8 @@
   --hw: min(100vw, 560px);
   --hh: clamp(560px, 100svh, 1000px);
   --lw: clamp(200px, calc(1.163 * var(--hw) - .254 * var(--hh) - 6px), 450px);
+  /* центр имён по высоте сцены; чтобы левый завиток «Г» на этой высоте не ложился на бант, надпись чуть сдвинута вправо (замерено на 7 экранах) */
+  --ny: .395;
   --ease: cubic-bezier(.22, .68, .18, 1);
   --ease-out: cubic-bezier(.23, 1, .32, 1);
   --ease-in-out: cubic-bezier(.77, 0, .175, 1);
@@ -147,13 +149,13 @@ button { font: inherit; color: inherit; }
 /* сцена: ровно экран, прилипает к верху; шторы длиннее сцены и шире её, их концы всегда за рамкой */
 .hero {
   position: sticky; top: 0; z-index: 0; height: 100svh; min-height: 560px; max-height: 1000px; overflow: hidden; text-align: center;
-  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: calc(.44 * var(--hh) - .4808 * var(--lw));
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: calc(var(--ny) * var(--hh) - .4808 * var(--lw));
 }
 /* лист с остальным содержимым наезжает на сцену при прокрутке */
 .sheet { overflow: hidden;
   position: relative; z-index: 2; background: var(--cream); padding-top: 22px;
   /* лист начинается сразу под именами и ниже кисти, низ штор уходит под него */
-  margin-top: calc(max(.44 * var(--hh) + .4808 * var(--lw) + 22px, .64 * var(--hh)) - var(--hh));
+  margin-top: calc(max(var(--ny) * var(--hh) + .4808 * var(--lw) + 22px, .64 * var(--hh)) - var(--hh));
   border-radius: 28px 28px 0 0; box-shadow: 0 -18px 36px -22px rgba(60, 44, 30, .35), 0 -1px 0 rgba(255, 255, 255, .6);
 }
 .curtain {
@@ -186,10 +188,10 @@ button { font: inherit; color: inherit; }
 .names { position: relative; z-index: 1; margin: 0; line-height: 1; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 /* имена: каллиграфия по образцу заказчика, обведённая в вектор (names-1 «Гамид», names-and «и», names-2 «Ума») */
-.lettering { position: relative; display: block; width: var(--lw); aspect-ratio: 4476 / 4304; }
+.lettering { position: relative; display: block; width: var(--lw); aspect-ratio: 4476 / 4304; transform: translateX(calc(var(--hw) * .021)); }
 .lettering .ln { position: absolute; inset: 0; width: 100%; height: 100%; }
 /* герб за именами: большой, едва заметный водяной знак; проявляется после имён */
-.hero-crest { position: absolute; left: 50%; top: 50%; width: calc(var(--lw) * .96); height: auto; transform: translate(-50%, -50%); opacity: 0; filter: saturate(.5); pointer-events: none; }
+.hero-crest { position: absolute; left: 50%; top: 36%; width: calc(var(--lw) * .96); height: auto; transform: translate(-50%, -50%); opacity: 0; filter: saturate(.5); pointer-events: none; }
 .play .hero-crest { animation: crest-in 2s ease 3s forwards; }
 @keyframes crest-in { to { opacity: .1; } }
 /* появляются слева направо, как будто их пишут пером: маска уезжает вправо */
@@ -307,11 +309,7 @@ button { font: inherit; color: inherit; }
 .band::before { top: -11px; background: radial-gradient(circle at 50% 100%, var(--band) 10.5px, transparent 11px) 50% 0 / 24px 12px repeat-x; }
 .band::after { bottom: -11px; background: radial-gradient(circle at 50% 0, var(--band) 10.5px, transparent 11px) 50% 0 / 24px 12px repeat-x; }
 .band p { margin: 16px auto 0; max-width: 19em; }
-/* дресс-код: три варианта на выбор */
-.dress-v { display: none; }
-body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v="2"], body[data-dress="3"] .dress-v[data-v="3"] { display: block; }
-
-/* 1. текст и перечёркнутый чёрный образец ткани */
+/* дресс-код */
 .sw-note { margin-top: 26px; font: 500 11px/1.4 var(--sans); letter-spacing: .24em; padding-left: .24em; text-transform: uppercase; color: var(--muted); }
 .sw-note span { color: var(--accent); }
 /* чёрный образец ткани, перечёркнутый коралловой линией */
@@ -322,25 +320,7 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
 }
 .no-black::after { content: ''; position: absolute; left: -8px; right: -8px; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; background: var(--accent); transform: rotate(-45deg); box-shadow: 0 0 0 1.5px var(--band); }
 
-/* 2. открытка в двойной коралловой рамке */
-.dcard {
-  max-width: 320px; margin: 26px auto 0; padding: 34px 24px 28px; background: var(--paper); border-radius: 3px;
-  box-shadow: inset 0 0 0 1px rgba(196, 74, 46, .5), inset 0 0 0 6px var(--paper), inset 0 0 0 7px rgba(196, 74, 46, .25), 0 24px 40px -30px rgba(70, 55, 40, .5);
-}
-.dcard-script { margin-bottom: 18px; font: 400 clamp(32px, 9vw, 40px)/1 var(--script); color: var(--accent); }
-.dcard-row span { display: block; font: 500 10.5px/1.3 var(--sans); letter-spacing: .26em; padding-left: .26em; text-transform: uppercase; color: var(--muted); }
-.dcard-row b { display: block; margin-top: 6px; font: 500 21px/1.2 var(--display); color: var(--ink); }
-.dia { display: block; width: 6px; height: 6px; margin: 14px auto; background: var(--accent); transform: rotate(45deg); }
-.dcard-ask { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(196, 74, 46, .22); font: 400 14px/1.45 var(--sans); color: var(--accent-deep); text-wrap: balance; }
 
-/* 3. для него и для неё */
-.duo { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 14px; max-width: 320px; margin: 28px auto 0; }
-.duo em { display: block; font: 400 clamp(28px, 7.8vw, 34px)/1 var(--script); color: var(--accent); }
-.duo b { display: block; margin-top: 10px; font: 500 11px/1.35 var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
-.duo-line { width: 1px; height: 64px; background: linear-gradient(transparent, rgba(196, 74, 46, .6), transparent); position: relative; }
-.duo-line::after { content: ''; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; background: var(--accent); transform: translate(-50%, -50%) rotate(45deg); }
-.duo-ask { display: inline-block; margin-top: 26px; padding: 11px 18px; border: 1px solid rgba(196, 74, 46, .35); border-radius: 999px; font-size: 14px; line-height: 1.4; color: var(--ink-soft); }
-.duo-ask span { color: var(--accent); }
 
 .kids { margin-top: var(--gap); }
 /* цитата между орнаментами */
@@ -348,8 +328,7 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
 /* ленточка с бантом до и после текста */
 .bow-line { display: block; width: min(66%, 250px); height: auto; margin: 0 auto; aspect-ratio: 1100 / 75; }
 body[data-type] .act .quote .eyebrow { margin: 20px 0 10px; }
-/* курсив Cormorant, как в выбранном варианте; правило сильнее общего правила абзацев */
-body[data-type] .act.kids .quote p.q:not(.credit) { margin: 0 auto 24px; max-width: 17em; font: italic 400 clamp(19px, 5.4vw, 22px)/1.4 var(--display); color: var(--ink-soft); }
+.kids .q { margin: 0 auto 24px; max-width: 19em; color: var(--ink-soft); }
 
 /* ================= акт VI: анкета на сером бархате с драпировкой ================= */
 /* фон — картинка заказчика: верх и низ с драпировкой без искажений, гладкая середина тянется по высоте анкеты */
@@ -393,7 +372,7 @@ body[data-type] .act.kids .quote p.q:not(.credit) { margin: 0 auto 24px; max-wid
 .form-error.shake { animation: shake .4s; }
 @keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
 #rsvp-form .btn { margin-top: 24px; }
-.hint { margin-top: 12px; text-align: center; font-size: 14px; line-height: 1.45; color: #FFFDF9; text-shadow: var(--sh); }
+.hint { margin-top: 12px; text-align: center; color: #FFFDF9; text-shadow: var(--sh); }
 
 .thanks { text-align: center; animation: rise-soft .8s var(--ease-out) both; }
 .thanks[hidden], #rsvp-form[hidden] { display: none; }
@@ -448,43 +427,37 @@ body[data-type] .act.kids .quote p.q:not(.credit) { margin: 0 auto 24px; max-wid
 }
 
 /* ================= срок ответа ================= */
-.deadline { margin: -8px auto 26px; max-width: 18em; font-family: var(--p-font, var(--serif)); font-size: 16px; line-height: 1.4; color: var(--ink-soft); }
+.deadline { margin: -8px auto 26px; max-width: 19em; color: var(--ink-soft); }
 
 /* ================= шрифты: выбран вариант 3 (тонкая антиква, пропись над заголовками, текст Montserrat) ================= */
 /* 3. Тонкая антиква: крупные светлые заголовки, над ними пропись */
 body[data-type="3"] { --serif: var(--display); --h-font: var(--display); --h-weight: 300; --h-size: clamp(34px, 9.6vw, 44px); --h-ls: -.01em; --h-tt: none; --h-lh: 1.02;
   --p-font: 'Montserrat', var(--sans); --p-weight: 300; --p-size: 14.5px; --p-lh: 1.6; --eb-font: var(--script); --eb-weight: 400; --eb-ls: 0; --eb-size: 23px; }
 body[data-type] .act h2 { font-family: var(--h-font); font-weight: var(--h-weight); font-size: var(--h-size); letter-spacing: var(--h-ls); text-transform: var(--h-tt); line-height: var(--h-lh); }
-body[data-type] .act p:not(.hint):not(.deadline):not(.credit), body[data-type] .arch p, body[data-type] .r-addr { font-family: var(--p-font); font-weight: var(--p-weight); font-size: var(--p-size); line-height: var(--p-lh); }
+/* весь основной текст одинаковый: шрифт, кегль и межстрочный (цитата про детей, срок ответа и подсказка тоже) */
+body[data-type] .act p:not(.credit), body[data-type] .arch p, body[data-type] .r-addr { font-family: var(--p-font); font-weight: var(--p-weight); font-style: normal; font-size: var(--p-size); line-height: var(--p-lh); }
 body[data-type] .act .eyebrow { font-family: var(--eb-font); font-weight: var(--eb-weight); letter-spacing: var(--eb-ls); padding-left: var(--eb-ls); font-size: var(--eb-size); }
 body[data-type="3"] .act .eyebrow { text-transform: none; line-height: 1; margin-bottom: 2px; }
 /* под прописным заголовком подпись отодвинута, чтобы не задевать высокие буквы */
 .act .eyebrow + h2 { margin-top: 10px; }
 body[data-type="3"] .pill { font-family: 'Montserrat', var(--sans); font-weight: 500; font-size: 10.5px; letter-spacing: .22em; }
 
-/* ================= панель выбора вариантов (свёрнута в кнопку) ================= */
-.chooser {
-  position: fixed; z-index: 40; right: 12px; bottom: calc(env(safe-area-inset-bottom) + 12px); transform: translateY(160%);
-  display: flex; flex-direction: column; gap: 6px; padding: 0; border-radius: 22px;
-  background: rgba(38, 36, 31, .86); color: #FBF4EA; -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  box-shadow: 0 10px 26px -10px rgba(0, 0, 0, .5); font: 500 12px/1 var(--sans); letter-spacing: .04em;
-  transition: transform .6s var(--ease-out);
-}
-body:not(.locked) .chooser { transform: none; }
-.ch-toggle { height: 44px; padding: 0 16px; border: 0; background: none; font-weight: 600 !important; letter-spacing: .06em; }
-.ch-rows { display: none; padding: 4px 12px 12px; gap: 6px; flex-direction: column; }
-.chooser.open .ch-rows { display: flex; }
-.chooser.open { border-radius: 16px; }
-.ch-row { display: flex; align-items: center; gap: 6px; }
-.ch-row span { width: 78px; opacity: .75; }
-.chooser button { font: inherit; color: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-.ch-row button { width: 34px; height: 30px; border-radius: 9px; border: 1px solid rgba(251, 244, 234, .3); background: transparent; transition: background-color .2s, color .2s, transform .15s; }
-.ch-row button:active { transform: scale(.94); }
-.ch-row button[aria-pressed="true"] { background: #FBF4EA; color: #26241F; border-color: #FBF4EA; }
+
 
 @media (max-width: 360px) { .arch { padding-left: 7%; padding-right: 7%; } }
 
 /* ровные цифры везде: сокращённая запись font иначе сбрасывает их у отдельных элементов */
-body[data-type][data-dress] * { font-variant-numeric: lining-nums; }
+body[data-type] * { font-variant-numeric: lining-nums; }
 
 
+
+/* ================= мерцание: звёздочки то тут, то там по всему сайту ================= */
+.sparks { position: absolute; inset: 0; z-index: 3; pointer-events: none; overflow: hidden; }
+.hero > .sparks { z-index: 0; }
+.spark { position: absolute; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); opacity: 0; animation: twinkle var(--d) ease-in-out var(--w) infinite; }
+/* мягкое золотистое свечение и сама четырёхлучевая звёздочка */
+.spark::before { content: ''; position: absolute; inset: -70%; border-radius: 50%; background: radial-gradient(circle, rgba(250, 222, 160, .8), rgba(226, 182, 98, .28) 38%, rgba(226, 182, 98, 0) 66%); }
+.spark::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle, #FFFFFF 0 20%, #FBE6B4 42%, #D9A64C 100%);
+  clip-path: polygon(50% 0, 58% 42%, 100% 50%, 58% 58%, 50% 100%, 42% 58%, 0 50%, 42% 42%); }
+@keyframes twinkle { 0%, 28%, 76%, 100% { opacity: 0; transform: scale(.2) rotate(0deg); } 46%, 58% { opacity: 1; transform: scale(1) rotate(40deg); } }
+@media (prefers-reduced-motion: reduce) { .sparks { display: none; } }
