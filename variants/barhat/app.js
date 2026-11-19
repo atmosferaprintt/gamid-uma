@@ -58,30 +58,15 @@ const easeCurtain = bezier(.62, .04, .22, 1);
   cover.addEventListener('click', open);
 })();
 
-/* ---------- атласные ленты: разворачиваются при появлении, потом тихо струятся ---------- */
+/* ---------- плашка «место и время»: ткань рисуется один раз, без анимации ---------- */
 document.querySelectorAll('.ribbon').forEach((box) => {
   const canvas = box.querySelector('.ribbon-gl');
   const gl = window.Ribbon && Ribbon.create(canvas, box.dataset.palette);
-  if (!gl) { box.classList.add('nogl'); canvas.remove(); }
-  const st = { time: Math.random() * 20, reveal: reduce ? 1 : 0 };
-  let raf = 0, last = 0, start = 0, shown = false;
-  function frame(now) {
-    raf = requestAnimationFrame(frame);
-    if (document.hidden || now - last < 33) return; // 30 кадров достаточно для медленной ткани
-    const dt = Math.min(.05, last ? (now - last) / 1000 : .016);
-    last = now;
-    st.time += dt;
-    if (shown) { const p = Math.min(1, (now - start) / 1800); st.reveal = 1 - Math.pow(1 - p, 3); }
-    gl.draw(st);
-  }
-  new IntersectionObserver(([en]) => {
-    if (en.isIntersecting && !shown) { shown = true; start = performance.now(); box.classList.add('in'); if (gl) gl.resize(); }
-    if (!gl) return;
-    if (reduce) { gl.resize(); gl.draw(st); return; }
-    if (en.isIntersecting && !raf) { last = 0; raf = requestAnimationFrame(frame); }
-    else if (!en.isIntersecting && raf) { cancelAnimationFrame(raf); raf = 0; }
-  }, { threshold: .3 }).observe(box);
-  window.addEventListener('resize', () => { if (gl) { gl.resize(); gl.draw(st); } });
+  if (!gl) { box.classList.add('nogl'); canvas.remove(); return; }
+  const st = { time: 7, reveal: 1 };
+  const paint = () => { gl.resize(); gl.draw(st); };
+  paint();
+  new ResizeObserver(paint).observe(box);
 });
 
 /* ---------- панель выбора вариантов: выбор сохраняется в ссылке ---------- */
