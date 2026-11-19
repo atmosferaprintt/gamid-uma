@@ -187,7 +187,11 @@ button { font: inherit; color: inherit; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 /* имена: каллиграфия по образцу заказчика, обведённая в вектор (names-1 «Гамид», names-and «и», names-2 «Ума») */
 .lettering { position: relative; display: block; width: var(--lw); aspect-ratio: 4476 / 4304; }
-.lettering img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.lettering .ln { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* герб над именами: бледным полутоном, чтобы не спорил с именами; проявляется после них */
+.hero-crest { position: absolute; left: 50%; bottom: 100%; width: min(calc(var(--lw) * .28), 88px); height: auto; margin-bottom: 12px; transform: translateX(-50%); opacity: 0; filter: saturate(.55); }
+.play .hero-crest { animation: crest-in 1.6s ease 3.1s forwards; }
+@keyframes crest-in { to { opacity: .34; } }
 /* появляются слева направо, как будто их пишут пером: маска уезжает вправо */
 .lettering .ln1, .lettering .ln2 {
   -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%); mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
@@ -271,15 +275,16 @@ button { font: inherit; color: inherit; }
 .act.place { padding: 0; margin-top: 48px; }
 /* плашка: ткань заказчика, по высоте блока, края уходят за рамку; без анимации */
 .ribbon { position: relative; height: clamp(230px, calc(var(--u) * 60), 300px); text-align: left; background: url(fabric.webp) center / auto 100% no-repeat; }
-.r-text { position: absolute; left: 9%; right: 6%; top: 50%; transform: translateY(-50%); z-index: 2; }
-.r-eyebrow { font: 500 11.5px/1.2 var(--sans); letter-spacing: .32em; text-transform: uppercase; color: #4A4540; }
-.r-venue { margin-top: 10px; font: 600 clamp(26px, calc(var(--u) * 8), 40px)/1.05 var(--sans); letter-spacing: -.01em; color: #26231F; }
-.r-when { margin-top: 10px; font: 400 clamp(16px, calc(var(--u) * 4.6), 24px)/1 var(--sans); letter-spacing: .08em; color: #36322D; font-variant-numeric: lining-nums tabular-nums; }
-.r-when i { font-style: normal; margin: 0 .25em; }
+.r-text { position: absolute; left: 11%; right: 6%; top: 50%; transform: translateY(-52%); z-index: 2; }
+.r-eyebrow { font: 500 12px/1.2 var(--sans); letter-spacing: .26em; text-transform: uppercase; color: #3A3631; }
+.r-venue { margin-top: 8px; font: 600 clamp(28px, calc(var(--u) * 8.8), 44px)/1.05 var(--sans); letter-spacing: -.015em; color: #24211D; }
+.r-when { margin-top: 9px; font: 400 clamp(17px, calc(var(--u) * 5), 25px)/1 var(--sans); letter-spacing: .02em; color: #2E2A26; font-variant-numeric: lining-nums tabular-nums; }
+.r-when i { font-style: normal; margin: 0 .18em; }
+/* большая «26»: тонкая курсивная антиква, светлым тиснением, заходит под название */
 .r-big {
-  position: absolute; right: 1%; top: 50%; z-index: 1; transform: translateY(-50%);
-  font: 200 clamp(110px, calc(var(--u) * 32), 180px)/.8 var(--sans); letter-spacing: -.04em; color: rgba(255, 252, 247, .88);
-  text-shadow: 0 1px 0 rgba(255, 255, 255, .4); pointer-events: none;
+  position: absolute; left: 47%; top: 50%; z-index: 1; transform: translateY(-50%); pointer-events: none;
+  font: italic 300 clamp(180px, calc(var(--u) * 61), 330px)/.8 var(--display); letter-spacing: -.03em; font-variant-numeric: lining-nums;
+  color: rgba(252, 249, 244, .82); text-shadow: 0 1px 0 rgba(255, 255, 255, .45), 0 -1px 1px rgba(60, 50, 40, .12), 0 6px 18px rgba(60, 50, 40, .12);
 }
 /* плашка без анимации: текст и цифра видны сразу */
 /* рисунок зала под плашкой: бумага сведена в цвет страницы */
@@ -310,19 +315,29 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
 .fan { position: relative; width: 260px; max-width: 100%; height: 178px; margin: 26px auto 0; }
 .fan i {
   position: absolute; left: 50%; bottom: 8px; width: 36px; height: 160px; margin-left: -18px; border-radius: 18px 18px 9px 9px;
-  transform-origin: 50% calc(100% - 17px); transform: rotate(0deg);
+  transform-origin: 50% calc(100% - 17px);
   background:
     linear-gradient(90deg, rgba(0, 0, 0, .18), rgba(255, 255, 255, .36) 30%, rgba(255, 255, 255, 0) 52%, rgba(0, 0, 0, .1) 76%, rgba(0, 0, 0, .22)),
     linear-gradient(180deg, rgba(255, 255, 255, .18), rgba(0, 0, 0, .08)), var(--c);
   box-shadow: 0 4px 10px -4px rgba(60, 40, 30, .5), inset 0 0 0 1px rgba(255, 255, 255, .16);
 }
-.fan.in i { transform: rotate(var(--a)); transition: transform 1.2s cubic-bezier(.22, .9, .28, 1) .15s; }
+/* раскрытое положение по умолчанию, при появлении веер раскрывается из сложенного */
+.fan i { transform: rotate(var(--a)); }
+.fan.in i { animation: fan-open 1.2s cubic-bezier(.22, .9, .28, 1) .15s both; }
+@keyframes fan-open { from { transform: rotate(0deg); } }
 /* средняя полоска сверху, крайние под ней: веер симметричный */
 .fan i:nth-child(1), .fan i:nth-child(7) { z-index: 0; } .fan i:nth-child(2), .fan i:nth-child(6) { z-index: 1; } .fan i:nth-child(3), .fan i:nth-child(5) { z-index: 2; } .fan i:nth-child(4) { z-index: 3; }
 .fan b { position: absolute; z-index: 5; left: 50%; bottom: 19px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, #fff, #D9D2C8 45%, #958D83); box-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
 .sw-note { margin-top: 14px; font: 500 11px/1.4 var(--sans); letter-spacing: .24em; padding-left: .24em; text-transform: uppercase; color: var(--muted); }
 .sw-note span { color: var(--accent); }
+/* чёрный образец ткани, перечёркнутый коралловой линией */
+.no-black {
+  position: relative; display: inline-block; width: 24px; height: 24px; margin: -6px 12px 0 0; vertical-align: middle; border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .42), rgba(255, 255, 255, 0) 48%), radial-gradient(circle at 70% 78%, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0) 55%), #24201D;
+  box-shadow: 0 3px 7px -2px rgba(40, 30, 24, .5);
+}
+.no-black::after { content: ''; position: absolute; left: -5px; right: -5px; top: 50%; height: 2px; margin-top: -1px; border-radius: 2px; background: var(--accent); transform: rotate(-45deg); box-shadow: 0 0 0 1.5px var(--band); }
 
 /* 2. открытка в двойной коралловой рамке */
 .dcard {
@@ -353,81 +368,69 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
 .quote .eyebrow { margin: 22px 0 12px; }
 body[data-type] .kids .q { margin: 0 auto 24px; max-width: 17em; font: italic 400 clamp(18px, 5.2vw, 21px)/1.4 var(--display); color: var(--ink-soft); }
 
-/* ================= акт VI: анкета на бархате ================= */
-.velvet {
-  margin-top: var(--gap); padding: 0; color: var(--on-velvet); overflow: hidden;
-  /* запасной бархат без WebGL */
-  background:
-    radial-gradient(70% 45% at 50% 18%, rgba(240, 120, 90, .22), transparent 70%),
-    repeating-linear-gradient(90deg, #4f150e 0, #6d2116 14px, #8a2c1c 22px, #6a2015 32px, #4f150e 44px);
+/* ================= акт VI: анкета на сером бархате с драпировкой ================= */
+/* фон — картинка заказчика: верх и низ с драпировкой без искажений, гладкая середина тянется по высоте анкеты */
+.rsvp { margin-top: var(--gap); padding: 0; color: var(--ink); }
+.rsvp::before {
+  content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  border-style: solid; border-color: transparent; border-width: calc(var(--hw) * .338) 0 calc(var(--hw) * .211) 0;
+  border-image: url(rsvp-panel.webp) 330 0 206 0 fill / calc(var(--hw) * .338) 0 calc(var(--hw) * .211) 0 stretch;
 }
-.velvet.gl-on { background: #4a130c; }
-.velvet-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; }
-.valance { position: relative; z-index: 2; display: block; width: 100%; height: auto; margin-bottom: -6px; }
-.rsvp-in { position: relative; z-index: 1; padding: 40px 9% 64px; }
-.velvet .eyebrow { color: var(--peach); }
-.velvet h2 { color: var(--on-velvet); font-size: clamp(28px, 8vw, 40px); margin-bottom: 26px; }
+.rsvp-in { position: relative; z-index: 1; padding: calc(var(--hw) * .3 + 8px) 10% calc(var(--hw) * .21 + 18px); }
+.rsvp .eyebrow { color: #8E2F1B; }
+.rsvp h2 { color: var(--ink); margin-bottom: 22px; }
 #rsvp-form { text-align: left; }
 .inp {
-  width: 100%; height: 54px; padding: 0 16px; border: 1px solid rgba(246, 239, 230, .38); border-radius: 3px;
-  background: rgba(255, 245, 235, .07); color: var(--on-velvet); font: 400 16px var(--sans);
+  width: 100%; height: 52px; padding: 0 16px; border: 1px solid rgba(38, 36, 31, .3); border-radius: 3px;
+  background: rgba(255, 252, 247, .62); color: var(--ink); font: 400 16px var(--sans);
   transition: border-color .25s ease, background-color .25s ease, box-shadow .25s ease; -webkit-appearance: none; appearance: none;
 }
-.inp::placeholder { color: rgba(246, 239, 230, .55); }
-.inp:focus { outline: none; border-color: var(--on-velvet); background-color: rgba(255, 245, 235, .13); box-shadow: 0 0 0 4px rgba(242, 179, 155, .16); }
-.radios { margin: 22px 0 6px; display: grid; gap: 14px; }
-.radio { position: relative; display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 16px; color: var(--on-velvet); -webkit-tap-highlight-color: transparent; }
+.inp::placeholder { color: rgba(38, 36, 31, .55); }
+.inp:focus { outline: none; border-color: var(--accent); background-color: rgba(255, 252, 247, .85); box-shadow: 0 0 0 4px rgba(196, 74, 46, .14); }
+.radios { margin: 20px 0 6px; display: grid; gap: 14px; }
+.radio { position: relative; display: flex; align-items: center; gap: 14px; cursor: pointer; font-size: 16px; color: var(--ink); -webkit-tap-highlight-color: transparent; }
 .radio input { position: absolute; opacity: 0; pointer-events: none; }
-.dot { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(246, 239, 230, .55); display: grid; place-items: center; transition: border-color .25s ease; }
-.dot::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--peach); transform: scale(.4); opacity: 0; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1), opacity .2s ease; }
-.radio input:checked + .dot { border-color: var(--peach); }
+.dot { flex: none; width: 24px; height: 24px; border-radius: 50%; border: 1px solid rgba(38, 36, 31, .45); background: rgba(255, 252, 247, .45); display: grid; place-items: center; transition: border-color .25s ease; }
+.dot::after { content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); transform: scale(.4); opacity: 0; transition: transform .3s cubic-bezier(.3, 1.6, .5, 1), opacity .2s ease; }
+.radio input:checked + .dot { border-color: var(--accent); }
 .radio input:checked + .dot::after { transform: none; opacity: 1; }
-.radio input:focus-visible + .dot { box-shadow: 0 0 0 4px rgba(242, 179, 155, .25); }
+.radio input:focus-visible + .dot { box-shadow: 0 0 0 4px rgba(196, 74, 46, .2); }
 
 /* «сколько вас» раскрывается плавно */
 .count { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .5s var(--ease), opacity .4s ease; }
 .count.show { grid-template-rows: 1fr; opacity: 1; }
 .count-in { overflow: hidden; min-height: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
-.count-in > span { padding-top: 14px; font-size: 15px; color: rgba(246, 239, 230, .88); }
-.count small { flex-basis: 100%; color: rgba(251, 244, 234, .8); font-size: 13px; }
-.stepper { margin-top: 14px; display: inline-flex; align-items: center; border: 1px solid rgba(246, 239, 230, .38); border-radius: 3px; }
-.stepper button { width: 42px; height: 40px; border: 0; background: none; cursor: pointer; font-size: 20px; color: var(--on-velvet); }
+.count-in > span { padding-top: 14px; font-size: 15px; color: var(--ink-soft); }
+.count small { flex-basis: 100%; color: #4A4540; font-size: 13px; }
+.stepper { margin-top: 14px; display: inline-flex; align-items: center; border: 1px solid rgba(38, 36, 31, .3); border-radius: 3px; background: rgba(255, 252, 247, .5); }
+.stepper button { width: 42px; height: 40px; border: 0; background: none; cursor: pointer; font-size: 20px; color: var(--ink); }
 .stepper output { min-width: 30px; text-align: center; font: 400 21px var(--serif); }
 
-.form-error { margin-top: 14px; color: #FFC6B0; font-size: 14px; }
+.form-error { margin-top: 14px; color: #8E2F1B; font-size: 14px; }
 .form-error.shake { animation: shake .4s; }
 @keyframes shake { 20%, 60% { transform: translateX(-5px); } 40%, 80% { transform: translateX(5px); } }
 #rsvp-form .btn { margin-top: 24px; }
-.btn-cream { background: var(--on-velvet); color: #7E2416; box-shadow: 0 12px 26px -12px rgba(0, 0, 0, .65); }
-.btn-cream::after { background: linear-gradient(100deg, transparent, rgba(196, 74, 46, .14), transparent); }
-@media (hover: hover) and (pointer: fine) { .btn-cream:hover { background-color: #fff; } }
-.hint { margin-top: 12px; text-align: center; font-size: 13.5px; line-height: 1.45; color: rgba(251, 244, 234, .86); }
+.hint { margin-top: 12px; text-align: center; font-size: 13.5px; line-height: 1.45; color: #3F3B36; }
 
 .thanks { text-align: center; animation: rise-soft .8s var(--ease-out) both; }
 .thanks[hidden], #rsvp-form[hidden] { display: none; }
-.thanks-title { font: 400 60px/1 var(--script); color: var(--peach); }
-.thanks p { margin: 14px auto 22px; max-width: 22em; color: var(--on-velvet); }
-.link { display: block; margin: 14px auto 0; border: 0; background: none; cursor: pointer; color: rgba(246, 239, 230, .72); text-decoration: underline; text-underline-offset: 3px; font-size: 15px; }
+.thanks-title { font: 400 60px/1 var(--script); color: var(--accent-deep); }
+.thanks p { margin: 14px auto 22px; max-width: 22em; color: var(--ink); }
+.link { display: block; margin: 14px auto 0; border: 0; background: none; cursor: pointer; color: #3F3B36; text-decoration: underline; text-underline-offset: 3px; font-size: 15px; }
 @keyframes rise-soft { from { opacity: 0; transform: translateY(12px); } }
 
-/* подол: низ бархата фестонами, над ними серебряный шнур */
-.velvet {
-  -webkit-mask: linear-gradient(#000 0 0) top / 100% calc(100% - 11px) no-repeat, radial-gradient(circle at 50% 0, #000 10.5px, transparent 11px) bottom / 24px 11px repeat-x;
-          mask: linear-gradient(#000 0 0) top / 100% calc(100% - 11px) no-repeat, radial-gradient(circle at 50% 0, #000 10.5px, transparent 11px) bottom / 24px 11px repeat-x;
-}
-.hem { position: relative; z-index: 1; height: 24px; }
-.hem::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: repeating-linear-gradient(90deg, var(--silver) 0 3.2px, rgba(220, 214, 207, .3) 3.2px 4.6px); opacity: .85; }
-
 /* ================= финал ================= */
-.finale { margin-top: var(--gap); padding-bottom: 72px; }
+.finale { margin-top: var(--gap); padding-bottom: 0; }
+/* сайт заканчивается драпировкой с коралловым шнуром, герб стоит в её изгибе */
+.final-drape { display: block; width: var(--hw); max-width: none; height: auto; margin: calc(var(--hw) * -.36) calc(var(--hw) * -.09) 0; position: relative; z-index: 1; pointer-events: none; }
 /* герб: проявляется из лёгкой дымки, потом по золоту изредка пробегает блик */
-.crest { position: relative; width: min(34%, 132px); aspect-ratio: 760 / 792; margin: 0 auto; }
+.crest { position: relative; width: min(34%, 132px); aspect-ratio: 760 / 834; margin: 0 auto; }
 .crest img { display: block; width: 100%; height: 100%; filter: drop-shadow(0 10px 18px rgba(120, 84, 40, .22)); }
 .crest.rv { transform: scale(.94); transition: opacity 1.4s var(--ease), transform 1.8s var(--ease-out); }
 .crest.rv.in { transform: none; filter: none; }
 .crest-sheen {
   position: absolute; inset: 0; pointer-events: none;
-  -webkit-mask: url(crest.webp) center / 100% 100% no-repeat; mask: url(crest.webp) center / 100% 100% no-repeat;
+  -webkit-mask: url(gerb.webp) center / 100% 100% no-repeat; mask: url(gerb.webp) center / 100% 100% no-repeat;
   background: linear-gradient(115deg, transparent 40%, rgba(255, 246, 222, .7) 50%, transparent 60%) 170% 0 / 260% 100% no-repeat;
   mix-blend-mode: screen;
 }
@@ -453,12 +456,13 @@ body[data-type] .kids .q { margin: 0 auto 24px; max-width: 17em; font: italic 40
   .cover-names img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important; }
   .cover-date { transform: none !important; }
   .draw, .draw-g > *, .arch-line path { stroke-dashoffset: 0 !important; }
-  .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important; }
+  .lettering .ln { -webkit-mask: none !important; mask: none !important; opacity: 1 !important; }
+  .hero-crest { opacity: .34 !important; }
   .crest-sheen { display: none; }
 }
 
 /* ================= срок ответа ================= */
-.deadline { margin: -8px auto 26px; max-width: 18em; font-family: var(--p-font, var(--serif)); font-size: 16px; line-height: 1.4; color: rgba(251, 244, 234, .92); }
+.deadline { margin: -8px auto 26px; max-width: 18em; font-family: var(--p-font, var(--serif)); font-size: 16px; line-height: 1.4; color: var(--ink-soft); }
 
 /* ================= шрифты: выбран вариант 3 (тонкая антиква, пропись над заголовками, текст Montserrat) ================= */
 /* 3. Тонкая антиква: крупные светлые заголовки, над ними пропись */
@@ -497,39 +501,4 @@ body:not(.locked) .chooser { transform: none; }
 /* ровные цифры везде: сокращённая запись font иначе сбрасывает их у отдельных элементов */
 body[data-type][data-dress] * { font-variant-numeric: lining-nums; }
 
-/* ================= анкета: три варианта на выбор ================= */
-/* 1 — красный бархат с ламбрекеном (основа выше) */
-/* 2 — светлая открытка в двойной коралловой рамке */
-body[data-rsvp="2"] .velvet {
-  margin-left: 6%; margin-right: 6%; border-radius: 4px; background: var(--paper); color: var(--ink); -webkit-mask: none; mask: none;
-  box-shadow: inset 0 0 0 1px rgba(196, 74, 46, .5), inset 0 0 0 7px var(--paper), inset 0 0 0 8px rgba(196, 74, 46, .24), 0 30px 60px -40px rgba(70, 55, 40, .5);
-}
-body[data-rsvp="2"] .velvet-gl, body[data-rsvp="2"] .valance, body[data-rsvp="2"] .hem { display: none; }
-body[data-rsvp="2"] .rsvp-in { padding: 46px 8% 40px; }
-body[data-rsvp="2"] .velvet .eyebrow { color: var(--accent-deep); }
-body[data-rsvp="2"] .velvet h2 { color: var(--ink); }
-body[data-rsvp="2"] .deadline { color: var(--ink-soft); }
-body[data-rsvp="2"] .inp { border-color: rgba(122, 116, 108, .45); background: #fff; color: var(--ink); }
-body[data-rsvp="2"] .inp::placeholder { color: var(--muted); }
-body[data-rsvp="2"] .inp:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 4px rgba(196, 74, 46, .12); }
-body[data-rsvp="2"] .radio { color: var(--ink); }
-body[data-rsvp="2"] .dot { border-color: rgba(122, 116, 108, .6); }
-body[data-rsvp="2"] .dot::after { background: var(--accent); }
-body[data-rsvp="2"] .radio input:checked + .dot { border-color: var(--accent); }
-body[data-rsvp="2"] .count-in > span { color: var(--ink-soft); }
-body[data-rsvp="2"] .count small { color: var(--muted); }
-body[data-rsvp="2"] .stepper { border-color: rgba(122, 116, 108, .45); }
-body[data-rsvp="2"] .stepper button { color: var(--ink); }
-body[data-rsvp="2"] .form-error { color: var(--accent-deep); }
-body[data-rsvp="2"] .hint { color: var(--muted); }
-body[data-rsvp="2"] .thanks-title { color: var(--accent); }
-body[data-rsvp="2"] .thanks p { color: var(--ink-soft); }
-body[data-rsvp="2"] .link { color: var(--muted); }
-/* 3 — графитовый бархат, ламбрекен серебряный, кнопка коралловая */
-body[data-rsvp="3"] .velvet { background: repeating-linear-gradient(90deg, #3f3d3a 0, #55524e 14px, #67635e 22px, #524f4b 32px, #3f3d3a 44px); }
-body[data-rsvp="3"] .velvet.gl-on { background: #46433f; }
-body[data-rsvp="3"] .valance { filter: grayscale(1) brightness(1.5) contrast(.9); }
-body[data-rsvp="3"] .velvet .eyebrow { color: #F6D3C4; }
-body[data-rsvp="2"] .btn-cream, body[data-rsvp="3"] .btn-cream { background: var(--accent); color: #fff; box-shadow: 0 10px 22px -10px rgba(120, 40, 22, .7); }
-body[data-rsvp="2"] .btn-cream::after, body[data-rsvp="3"] .btn-cream::after { background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .28), transparent); }
-@media (hover: hover) and (pointer: fine) { body[data-rsvp="2"] .btn-cream:hover, body[data-rsvp="3"] .btn-cream:hover { background-color: var(--accent-deep); } }
+

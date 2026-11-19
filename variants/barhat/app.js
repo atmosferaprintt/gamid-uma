@@ -62,7 +62,7 @@ const easeCurtain = bezier(.62, .04, .22, 1);
 (function chooser() {
   const panel = document.querySelector('.chooser');
   if (!panel) return;
-  const KEYS = { dress: 'd', rsvp: 'r' }; // шрифты выбраны: вариант 3, задан в разметке // ключ в body.dataset -> параметр в ссылке
+  const KEYS = { dress: 'd' }; // шрифты выбраны: вариант 3, задан в разметке // ключ в body.dataset -> параметр в ссылке
   const q = new URLSearchParams(location.search);
   const state = {};
   for (const k in KEYS) state[k] = q.get(KEYS[k]) || document.body.dataset[k] || '1';
@@ -184,44 +184,6 @@ document.getElementById('map').href = 'https://yandex.ru/maps/?text=' + encodeUR
   }
   tick();
   setInterval(tick, 15000);
-})();
-
-/* ---------- бархат под анкетой ---------- */
-(function velvetBlock() {
-  const sec = document.querySelector('.rsvp.velvet');
-  const canvas = sec.querySelector('.velvet-gl');
-  let gl = null, raf = 0, last = 0, tried = false;
-  const st = { time: 3, open: 0, vel: 0, light: .2 };
-  // цвет бархата по варианту анкеты: 1 — красный, 3 — графитовый; во 2-м бархата нет
-  const PAL = { 1: [[.46, .13, .09], [.62, .26, .19]], 3: [[.3, .29, .275], [.52, .5, .47]] };
-  const pal = () => PAL[document.body.dataset.rsvp] || PAL[1];
-  const off = () => document.body.dataset.rsvp === '2';
-  window.addEventListener('variant', () => { if (gl) { gl.setColors(pal()[0], pal()[1]); if (!off()) gl.draw(st); } });
-  function draw(now) {
-    raf = requestAnimationFrame(draw);
-    if (off() || now - last < 33) return; // 30 кадров в секунду достаточно для медленного света
-    const dt = last ? Math.min(.1, (now - last) / 1000) : .016; last = now;
-    st.time += dt;
-    const r = sec.getBoundingClientRect();
-    // свет прожектора скользит по ткани вместе с прокруткой
-    st.light = Math.min(.75, Math.max(.05, (window.innerHeight * .4 - r.top) / r.height));
-    gl.draw(st);
-  }
-  new IntersectionObserver(([e]) => {
-    if (e.isIntersecting) {
-      if (!tried) {
-        tried = true;
-        gl = window.Velvet && Velvet.create(canvas, { mode: 1, base: pal()[0], sheen: pal()[1], maxDpr: 1.25 });
-        if (!gl) { canvas.remove(); sec.classList.add('nogl'); return; }
-        window.addEventListener('resize', () => { gl.resize(); gl.draw(st); });
-        new ResizeObserver(() => { gl.resize(); gl.draw(st); }).observe(canvas);
-        sec.classList.add('gl-on');
-      }
-      if (!gl) return;
-      if (reduce) { gl.draw(st); return; }
-      if (!raf) { last = 0; raf = requestAnimationFrame(draw); }
-    } else if (raf) { cancelAnimationFrame(raf); raf = 0; }
-  }, { rootMargin: '200px 0px' }).observe(sec);
 })();
 
 /* ---------- анкета гостя: ответ уходит сообщением в WhatsApp ---------- */

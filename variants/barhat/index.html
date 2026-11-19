@@ -23,10 +23,10 @@
   <link rel="preload" href="names-2.svg" as="image">
   <link rel="preload" href="curtain-left.webp" as="image">
   <link rel="preload" href="curtain-right.webp" as="image">
-  <link rel="stylesheet" href="style.css?v=20261119h">
-  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .arch > *, .days > *, .fan i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important }</style></noscript>
+  <link rel="stylesheet" href="style.css?v=20261119l">
+  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .arch > *, .days > *, .fan i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering .ln { -webkit-mask: none !important; mask: none !important; opacity: 1 !important }</style></noscript>
 </head>
-<body class="locked" data-type="3" data-dress="1" data-rsvp="1">
+<body class="locked" data-type="3" data-dress="1">
 
   <!-- Заставка: занавес с тёмным тоном, инициалы, дата, жаккардовая лента -->
   <div id="cover">
@@ -54,6 +54,7 @@
       <h1 class="names">
         <span class="sr">Гамид и Ума</span>
         <span class="lettering" aria-hidden="true">
+          <img class="hero-crest" src="gerb.webp" width="760" height="834" alt="">
           <img class="ln ln1" src="names-1.svg" width="4476" height="4304" alt="">
           <img class="ln and" src="names-and.svg" width="4476" height="4304" alt="">
           <img class="ln ln2" src="names-2.svg" width="4476" height="4304" alt="">
@@ -129,7 +130,7 @@
         <div class="fan rv" aria-hidden="true">
           <i style="--c:#E6D3B8;--a:-45deg"></i><i style="--c:#DDA79C;--a:-30deg"></i><i style="--c:#D2694C;--a:-15deg"></i><i style="--c:#A8B298;--a:0deg"></i><i style="--c:#9DAFC2;--a:15deg"></i><i style="--c:#B5A4C4;--a:30deg"></i><i style="--c:#7E2D36;--a:45deg"></i><b></b>
         </div>
-        <div class="sw-note rv">любой цвет, <span>кроме чёрного</span></div>
+        <div class="sw-note rv"><i class="no-black" aria-hidden="true"></i>любой цвет, <span>кроме чёрного</span></div>
       </div>
       <!-- вариант 2: открытка в двойной рамке -->
       <div class="dress-v" data-v="2">
@@ -162,10 +163,8 @@
       </div>
     </section>
 
-    <!-- ===== Акт VI: анкета на бархате ===== -->
-    <section class="act rsvp velvet">
-      <canvas class="velvet-gl" aria-hidden="true"></canvas>
-      <img class="valance" src="valance.svg" alt="" aria-hidden="true">
+    <!-- ===== Акт VI: анкета на сером бархате с драпировкой ===== -->
+    <section class="act rsvp">
       <div class="rsvp-in">
         <div class="eyebrow rv">анкета гостя</div>
         <h2 class="rv">Будете ли вы с&nbsp;нами?</h2>
@@ -188,25 +187,25 @@
             </div>
           </div>
           <div class="form-error" role="alert" hidden></div>
-          <button class="btn btn-cream" type="submit">Отправить ответ</button>
+          <button class="btn" type="submit">Отправить ответ</button>
           <p class="hint">Откроется WhatsApp с&nbsp;готовым сообщением, останется нажать «Отправить».</p>
         </form>
         <div class="thanks" hidden>
           <div class="thanks-title">Спасибо!</div>
           <p></p>
-          <a class="btn btn-cream" id="wa-again" target="_blank" rel="noopener">Открыть WhatsApp</a>
+          <a class="btn" id="wa-again" target="_blank" rel="noopener">Открыть WhatsApp</a>
           <button class="link" type="button" id="again">Изменить ответ</button>
         </div>
       </div>
-      <div class="hem" aria-hidden="true"></div>
     </section>
 
     <!-- ===== Финал ===== -->
     <footer class="act finale">
       <div class="crest rv" aria-label="Монограмма Гамида и Умы" role="img">
-        <img src="crest.webp" alt="" width="760" height="792" loading="lazy" decoding="async">
+        <img src="gerb.webp" alt="" width="760" height="834" loading="lazy" decoding="async">
         <span class="crest-sheen"></span>
       </div>
+      <img class="final-drape" src="final-drape.webp" width="1774" height="887" alt="" aria-hidden="true" loading="lazy" decoding="async">
     </footer>
     </div>
   </main>
@@ -216,11 +215,9 @@
     <button type="button" class="ch-toggle" aria-expanded="false">Варианты</button>
     <div class="ch-rows">
       <div class="ch-row"><span>Дресс-код</span><button type="button" data-k="dress" data-v="1">1</button><button type="button" data-k="dress" data-v="2">2</button><button type="button" data-k="dress" data-v="3">3</button></div>
-      <div class="ch-row"><span>Анкета</span><button type="button" data-k="rsvp" data-v="1">1</button><button type="button" data-k="rsvp" data-v="2">2</button><button type="button" data-k="rsvp" data-v="3">3</button></div>
     </div>
   </div>
 
-  <script src="velvet.js?v=20261119h"></script>
-  <script src="app.js?v=20261119h"></script>
+  <script src="app.js?v=20261119l"></script>
 </body>
 </html>
