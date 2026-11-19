@@ -354,20 +354,7 @@ body[data-dress="1"] .dress-v[data-v="1"], body[data-dress="2"] .dress-v[data-v=
 .duo-ask span { color: var(--accent); }
 
 .kids { margin-top: var(--gap); }
-.bow { display: block; width: 66px; height: 48px; margin: 0 auto 14px; fill: none; stroke: var(--accent); stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
-.bow.in .draw-g > * { stroke-dashoffset: 0; transition: stroke-dashoffset 1.5s var(--ease-in-out); }
-.kids p { margin: 16px auto 0; max-width: 19em; }
-.kids-v { display: none; }
-body[data-kids="1"] .kids-v[data-v="1"], body[data-kids="2"] .kids-v[data-v="2"], body[data-kids="3"] .kids-v[data-v="3"] { display: block; }
-/* 2. медальон: овал в двойной рамке */
-.oval {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  width: min(100%, 310px); min-height: min(124vw, 400px); margin: 0 auto; padding: 64px 13%; border-radius: 50%; background: var(--paper);
-  box-shadow: inset 0 0 0 1px rgba(196, 74, 46, .5), inset 0 0 0 7px var(--paper), inset 0 0 0 8px rgba(196, 74, 46, .24), 0 30px 50px -36px rgba(70, 55, 40, .5);
-}
-.oval-script { font: 400 clamp(28px, 8vw, 36px)/1.05 var(--script); color: var(--accent); }
-.kids .oval p { margin-top: 12px; max-width: none; }
-/* 3. цитата между орнаментами */
+/* цитата между орнаментами */
 .quote { max-width: 340px; margin: 0 auto; }
 .orn { display: block; position: relative; width: 150px; height: 9px; margin: 0 auto; }
 .orn::before { content: ''; position: absolute; left: 0; right: 0; top: 4px; height: 1px; background: linear-gradient(90deg, transparent, rgba(196, 74, 46, .6) 30%, rgba(196, 74, 46, .6) 70%, transparent); }
