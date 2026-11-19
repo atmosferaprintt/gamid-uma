@@ -23,8 +23,8 @@
   <link rel="preload" href="names-2.svg" as="image">
   <link rel="preload" href="curtain-left.webp" as="image">
   <link rel="preload" href="curtain-right.webp" as="image">
-  <link rel="stylesheet" href="style.css?v=20261119l">
-  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .arch > *, .days > *, .fan i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering .ln { -webkit-mask: none !important; mask: none !important; opacity: 1 !important }</style></noscript>
+  <link rel="stylesheet" href="style.css?v=20261119r">
+  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .arch > *, .days > * { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering .ln { -webkit-mask: none !important; mask: none !important; opacity: 1 !important }</style></noscript>
 </head>
 <body class="locked" data-type="3" data-dress="1">
 
@@ -124,12 +124,9 @@
     <section class="act dress band">
       <div class="eyebrow rv">для гостей</div>
       <h2 class="rv">Дресс-код</h2>
-      <!-- вариант 1: веер атласных тканей -->
+      <!-- вариант 1: текст и перечёркнутый чёрный образец ткани -->
       <div class="dress-v" data-v="1">
         <p class="rv">Мужчины в&nbsp;костюмах, дамы в&nbsp;вечерних платьях. Единственная просьба: не&nbsp;выбирать чёрный&nbsp;цвет.</p>
-        <div class="fan rv" aria-hidden="true">
-          <i style="--c:#E6D3B8;--a:-45deg"></i><i style="--c:#DDA79C;--a:-30deg"></i><i style="--c:#D2694C;--a:-15deg"></i><i style="--c:#A8B298;--a:0deg"></i><i style="--c:#9DAFC2;--a:15deg"></i><i style="--c:#B5A4C4;--a:30deg"></i><i style="--c:#7E2D36;--a:45deg"></i><b></b>
-        </div>
         <div class="sw-note rv"><i class="no-black" aria-hidden="true"></i>любой цвет, <span>кроме чёрного</span></div>
       </div>
       <!-- вариант 2: открытка в двойной рамке -->
@@ -156,17 +153,16 @@
     <!-- ===== Акт V: маленькая просьба, цитата между орнаментами ===== -->
     <section class="act kids">
       <div class="quote rv">
-        <span class="orn" aria-hidden="true"></span>
+        <img class="bow-line" src="bow-line.webp" width="1100" height="75" alt="" aria-hidden="true" loading="lazy" decoding="async">
         <div class="eyebrow">маленькая просьба</div>
         <p class="q">Мы очень любим ваших малышей, но&nbsp;этот вечер хотим провести в&nbsp;кругу взрослых. Надеемся на&nbsp;ваше понимание и&nbsp;будем рады подарить вам вечер&nbsp;отдыха.</p>
-        <span class="orn" aria-hidden="true"></span>
+        <img class="bow-line" src="bow-line.webp" width="1100" height="75" alt="" aria-hidden="true" loading="lazy" decoding="async">
       </div>
     </section>
 
     <!-- ===== Акт VI: анкета на сером бархате с драпировкой ===== -->
     <section class="act rsvp">
       <div class="rsvp-in">
-        <div class="eyebrow rv">анкета гостя</div>
         <h2 class="rv">Будете ли вы с&nbsp;нами?</h2>
         <p class="deadline rv">Просим подтвердить присутствие до&nbsp;23&nbsp;ноября 2026&nbsp;года</p>
         <form id="rsvp-form" class="rv" novalidate>
@@ -201,11 +197,13 @@
 
     <!-- ===== Финал ===== -->
     <footer class="act finale">
+      <div class="sig fin-sig rv"><span>С уважением,</span>Казбек и&nbsp;Эльмира</div>
       <div class="crest rv" aria-label="Монограмма Гамида и Умы" role="img">
         <img src="gerb.webp" alt="" width="760" height="834" loading="lazy" decoding="async">
         <span class="crest-sheen"></span>
       </div>
       <img class="final-drape" src="final-drape.webp" width="1774" height="887" alt="" aria-hidden="true" loading="lazy" decoding="async">
+      <p class="credit">Приглашение разработано<br>@atmosfera.buro</p>
     </footer>
     </div>
   </main>
@@ -218,6 +216,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=20261119l"></script>
+  <script src="app.js?v=20261119r"></script>
 </body>
 </html>
