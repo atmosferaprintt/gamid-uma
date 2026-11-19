@@ -23,8 +23,8 @@
   <link rel="preload" href="names-2.svg" as="image">
   <link rel="preload" href="curtain-left.webp" as="image">
   <link rel="preload" href="curtain-right.webp" as="image">
-  <link rel="stylesheet" href="style.css?v=20261119g">
-  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big, .arch > *, .days > *, .fan i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important } .ribbon { background: linear-gradient(100deg, #CFC8BF, #E4DED6 22%, #BFB7AD 46%, #DDD6CD 70%, #C2BAB0) }</style></noscript>
+  <link rel="stylesheet" href="style.css?v=20261119h">
+  <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .arch > *, .days > *, .fan i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important }</style></noscript>
 </head>
 <body class="locked" data-type="3" data-dress="1" data-rsvp="1">
 
@@ -101,10 +101,9 @@
       </div>
     </section>
 
-    <!-- ===== Акт III: место и время на атласной ленте ===== -->
+    <!-- ===== Акт III: место и время на ткани, под ней рисунок зала ===== -->
     <section class="act place">
       <div class="ribbon" id="ribbon">
-        <canvas class="ribbon-gl" aria-hidden="true"></canvas>
         <div class="r-big" aria-hidden="true">26</div>
         <div class="r-text">
           <div class="r-eyebrow">место и время</div>
@@ -112,6 +111,7 @@
           <div class="r-when">26.11.26 <i>•</i> 16:00</div>
         </div>
       </div>
+      <img class="hall rv" src="hall.webp" width="1100" height="825" alt="Рисунок здания «Рамина Холл»" loading="lazy" decoding="async">
       <p class="r-addr rv">ул.&nbsp;Хаджи Булача, 10,&nbsp;Махачкала</p>
       <div class="links rv">
         <a class="pill" id="map" target="_blank" rel="noopener">Открыть на карте</a>
@@ -220,8 +220,7 @@
     </div>
   </div>
 
-  <script src="ribbon.js?v=20261119g"></script>
-  <script src="velvet.js?v=20261119g"></script>
-  <script src="app.js?v=20261119g"></script>
+  <script src="velvet.js?v=20261119h"></script>
+  <script src="app.js?v=20261119h"></script>
 </body>
 </html>

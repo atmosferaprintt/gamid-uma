@@ -269,12 +269,8 @@ button { font: inherit; color: inherit; }
 
 /* ================= акт III: место и время на атласной ленте ================= */
 .act.place { padding: 0; margin-top: 48px; }
-.ribbon { position: relative; height: clamp(230px, calc(var(--u) * 64), 330px); text-align: left; background: transparent; }
-.ribbon-gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-/* без WebGL: та же лента градиентом с волнистыми краями */
-.ribbon.nogl { background: linear-gradient(100deg, #CFC8BF 0%, #E4DED6 22%, #BFB7AD 46%, #DDD6CD 70%, #C2BAB0 100%);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 20 C20 14 40 24 60 16 S90 6 100 9 L100 78 C80 84 60 76 40 82 S10 86 0 80 Z'/%3E%3C/svg%3E") 0 0 / 100% 100%;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0 20 C20 14 40 24 60 16 S90 6 100 9 L100 78 C80 84 60 76 40 82 S10 86 0 80 Z'/%3E%3C/svg%3E") 0 0 / 100% 100%; }
+/* плашка: ткань заказчика, по высоте блока, края уходят за рамку; без анимации */
+.ribbon { position: relative; height: clamp(230px, calc(var(--u) * 60), 300px); text-align: left; background: url(fabric.webp) center / auto 100% no-repeat; }
 .r-text { position: absolute; left: 9%; right: 6%; top: 50%; transform: translateY(-50%); z-index: 2; }
 .r-eyebrow { font: 500 11.5px/1.2 var(--sans); letter-spacing: .32em; text-transform: uppercase; color: #4A4540; }
 .r-venue { margin-top: 10px; font: 600 clamp(26px, calc(var(--u) * 8), 40px)/1.05 var(--sans); letter-spacing: -.01em; color: #26231F; }
@@ -286,7 +282,9 @@ button { font: inherit; color: inherit; }
   text-shadow: 0 1px 0 rgba(255, 255, 255, .4); pointer-events: none;
 }
 /* плашка без анимации: текст и цифра видны сразу */
-.r-addr { margin: -20px 8% 0; text-align: center; color: var(--ink-soft); }
+/* рисунок зала под плашкой: бумага сведена в цвет страницы */
+.hall { display: block; width: 100%; max-width: 460px; height: auto; margin: 14px auto 0; padding: 0 5%; }
+.r-addr { margin: 10px 8% 0; text-align: center; color: var(--ink-soft); }
 .act.place .links { margin: 18px auto 0; padding: 0 8%; }
 
 .links { display: grid; justify-content: center; grid-template-columns: minmax(0, 290px); gap: 10px; margin-top: 26px; }
@@ -451,7 +449,6 @@ body[data-type] .kids .q { margin: 0 auto 24px; max-width: 17em; font: italic 40
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01s !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: .2s !important; transition-delay: 0s !important; }
   .rv, .hero .a { filter: none; transform: none; }
-  .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big { opacity: 1 !important; filter: none !important; }
   .arch > *, .days > * { transform: none !important; }
   .cover-names img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important; }
   .cover-date { transform: none !important; }

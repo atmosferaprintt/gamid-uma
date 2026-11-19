@@ -58,17 +58,6 @@ const easeCurtain = bezier(.62, .04, .22, 1);
   cover.addEventListener('click', open);
 })();
 
-/* ---------- плашка «место и время»: ткань рисуется один раз, без анимации ---------- */
-document.querySelectorAll('.ribbon').forEach((box) => {
-  const canvas = box.querySelector('.ribbon-gl');
-  const gl = window.Ribbon && Ribbon.create(canvas, box.dataset.palette);
-  if (!gl) { box.classList.add('nogl'); canvas.remove(); return; }
-  const st = { time: 7, reveal: 1 };
-  const paint = () => { gl.resize(); gl.draw(st); };
-  paint();
-  new ResizeObserver(paint).observe(box);
-});
-
 /* ---------- панель выбора вариантов: выбор сохраняется в ссылке ---------- */
 (function chooser() {
   const panel = document.querySelector('.chooser');
