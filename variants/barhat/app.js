@@ -58,29 +58,54 @@ const easeCurtain = bezier(.62, .04, .22, 1);
   cover.addEventListener('click', open);
 })();
 
-/* ---------- мерцающие звёздочки по всему сайту: редкие, чаще по краям, чтобы не лезть в текст ---------- */
-(function sparkles() {
+/* ---------- пылинки по всей странице: такие же, как в луче над сценой, едва заметные ---------- */
+(function pageDust() {
   if (reduce) return;
-  function fill(box, per) {
-    const layer = document.createElement('div');
-    layer.className = 'sparks'; layer.setAttribute('aria-hidden', 'true');
-    const n = Math.max(6, Math.round(box.offsetHeight / per));
-    for (let i = 0; i < n; i++) {
-      const s = document.createElement('i');
-      s.className = 'spark';
-      const edge = Math.random() < .7;
-      const x = edge ? (Math.random() < .5 ? 3 + Math.random() * 15 : 82 + Math.random() * 15) : 8 + Math.random() * 84;
-      s.style.left = x.toFixed(1) + '%';
-      s.style.top = (Math.random() * 100).toFixed(1) + '%';
-      s.style.setProperty('--s', (10 + Math.random() * 12).toFixed(1) + 'px');
-      s.style.setProperty('--d', (3.2 + Math.random() * 3.6).toFixed(2) + 's');
-      s.style.setProperty('--w', (Math.random() * 7).toFixed(2) + 's');
-      layer.appendChild(s);
-    }
-    box.appendChild(layer);
+  const c = document.createElement('canvas');
+  c.className = 'page-dust'; c.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(c);
+  const ctx = c.getContext('2d');
+  let w = 0, h = 0, dpr = 1, last = 0;
+  const P = [];
+  function size() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = c.clientWidth; h = c.clientHeight;
+    c.width = Math.round(w * dpr); c.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  fill(document.querySelector('.hero'), 55);
-  fill(document.querySelector('.sheet'), 80);
+  function spawn(p, anywhere) {
+    p.x = Math.random() * w;
+    p.y = anywhere ? Math.random() * h : h + 6;
+    p.r = .5 + Math.random() * 1.3;
+    p.vy = 3 + Math.random() * 7;
+    p.ph = Math.random() * 6.28; p.tw = .5 + Math.random() * 1.4;
+    p.a = .18 + Math.random() * .32;
+    return p;
+  }
+  size();
+  for (let i = 0; i < 30; i++) P.push(spawn({}, true));
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (document.hidden || now - last < 33) return;
+    const dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+    ctx.clearRect(0, 0, w, h);
+    const t = now / 1000;
+    for (const p of P) {
+      p.y -= p.vy * dt;
+      p.x += Math.sin(t * .4 + p.ph) * 3 * dt;
+      if (p.y < -6) spawn(p, false);
+      const a = p.a * (.5 + .5 * Math.sin(t * p.tw + p.ph));
+      // светлая сердцевина видна на бархате, тёплый ореол едва заметен на креме
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3.2);
+      g.addColorStop(0, `rgba(255, 246, 228, ${a})`);
+      g.addColorStop(.35, `rgba(214, 176, 116, ${a * .32})`);
+      g.addColorStop(1, 'rgba(214, 176, 116, 0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(p.x - p.r * 3.2, p.y - p.r * 3.2, p.r * 6.4, p.r * 6.4);
+    }
+  }
+  requestAnimationFrame(frame);
+  window.addEventListener('resize', size);
 })();
 
 /* ---------- пылинки в луче над сценой ---------- */
