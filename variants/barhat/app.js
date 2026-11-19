@@ -88,7 +88,7 @@ document.querySelectorAll('.ribbon').forEach((box) => {
 (function chooser() {
   const panel = document.querySelector('.chooser');
   if (!panel) return;
-  const KEYS = { type: 't', dress: 'd', rsvp: 'r' }; // ключ в body.dataset -> параметр в ссылке
+  const KEYS = { dress: 'd', rsvp: 'r' }; // шрифты выбраны: вариант 3, задан в разметке // ключ в body.dataset -> параметр в ссылке
   const q = new URLSearchParams(location.search);
   const state = {};
   for (const k in KEYS) state[k] = q.get(KEYS[k]) || document.body.dataset[k] || '1';
