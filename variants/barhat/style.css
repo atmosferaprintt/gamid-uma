@@ -340,7 +340,8 @@ body[data-type] .act .quote .eyebrow { margin: 20px 0 10px; }
 
 /* ================= акт VI: анкета на сером бархате с драпировкой ================= */
 /* фон — картинка заказчика: верх и низ с драпировкой без искажений, гладкая середина тянется по высоте анкеты */
-.rsvp { margin-top: var(--gap); padding: 0; color: #FFFDF9; --sh: 0 1px 2px rgba(40, 34, 28, .35), 0 0 14px rgba(40, 34, 28, .18); }
+/* отступ до анкеты равен отступу от фестонов дресс-кода до ленточки: минус фестоны (11px) и прозрачный край картинки */
+.rsvp { margin-top: calc(var(--gap) - 11px - var(--hw) * 13 / 976); padding: 0; color: #FFFDF9; --sh: 0 1px 2px rgba(40, 34, 28, .35), 0 0 14px rgba(40, 34, 28, .18); }
 .rsvp::before {
   content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   border-style: solid; border-color: transparent; border-width: calc(var(--hw) * .338) 0 calc(var(--hw) * .211) 0;
