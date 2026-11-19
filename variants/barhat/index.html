@@ -15,29 +15,33 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;400;500;600&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="preload" href="seal.webp" as="image">
+  <link rel="preload" href="jacquard.webp" as="image">
+  <link rel="preload" href="names-1-light.svg" as="image">
   <link rel="preload" href="cover-left.webp" as="image">
   <link rel="preload" href="cover-right.webp" as="image">
   <link rel="preload" href="names-1.svg" as="image">
   <link rel="preload" href="names-2.svg" as="image">
   <link rel="preload" href="curtain-left.webp" as="image">
   <link rel="preload" href="curtain-right.webp" as="image">
-  <link rel="stylesheet" href="style.css?v=20261119e">
+  <link rel="stylesheet" href="style.css?v=20261119f">
   <noscript><style>#cover, .chooser { display: none } body.locked { overflow: auto; height: auto } .rv, .hero .a, .draw, .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big, .arch > *, .days > *, .fan i { opacity: 1 !important; transform: none !important; filter: none !important; stroke-dashoffset: 0 !important } .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important } .ribbon { background: linear-gradient(100deg, #CFC8BF, #E4DED6 22%, #BFB7AD 46%, #DDD6CD 70%, #C2BAB0) }</style></noscript>
 </head>
 <body class="locked" data-type="3" data-dress="1" data-rsvp="1">
 
-  <!-- Заставка: имена на закрытом атласном занавесе (WebGL, без него CSS-полотна) -->
+  <!-- Заставка: занавес с тёмным тоном, инициалы, дата, жаккардовая лента -->
   <div id="cover">
     <div class="drape left" aria-hidden="true"></div>
     <div class="drape right" aria-hidden="true"></div>
-    <div class="cover-text">
-      <div class="cover-date" data-split aria-label="26.11.2026">26.11.2026</div>
+    <div class="cover-in">
+      <div class="cover-date">26.11.2026</div>
+      <div class="cover-names" role="img" aria-label="Гамид и Ума">
+        <img class="ln ln1" src="names-1-light.svg" width="4476" height="4304" alt="">
+        <img class="ln and" src="names-and-light.svg" width="4476" height="4304" alt="">
+        <img class="ln ln2" src="names-2-light.svg" width="4476" height="4304" alt="">
+      </div>
+      <button id="open" class="btn-open" type="button">Открыть приглашение</button>
+      <img class="jacquard" src="jacquard.webp" width="220" height="1500" alt="" aria-hidden="true">
     </div>
-    <button class="seal" id="seal" type="button" aria-label="Открыть приглашение Гамида и Умы">
-      <img src="seal.webp" alt="" width="720" height="739" decoding="async">
-    </button>
-    <button id="open" class="btn-open" type="button">Открыть приглашение</button>
   </div>
 
   <main class="page">
@@ -216,8 +220,8 @@
     </div>
   </div>
 
-  <script src="ribbon.js?v=20261119e"></script>
-  <script src="velvet.js?v=20261119e"></script>
-  <script src="app.js?v=20261119e"></script>
+  <script src="ribbon.js?v=20261119f"></script>
+  <script src="velvet.js?v=20261119f"></script>
+  <script src="app.js?v=20261119f"></script>
 </body>
 </html>

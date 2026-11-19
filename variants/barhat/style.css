@@ -54,62 +54,61 @@ button { font: inherit; color: inherit; }
 .drape { position: absolute; top: 0; bottom: 0; width: 51.2%; background: #96938D center top / cover no-repeat; transition: transform 1.6s cubic-bezier(.5, .05, .2, 1); will-change: transform; }
 .drape.left { left: 0; z-index: 1; background-image: url(cover-left.webp); background-position: right top; box-shadow: 10px 0 18px -8px rgba(20, 16, 12, .45); }
 .drape.right { right: 0; background-image: url(cover-right.webp); background-position: left top; }
+/* тёмный серый полутон на ткани: одинаковый на обоих полотнах, шов не виден */
+.drape::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(34, 32, 29, .28), rgba(34, 32, 29, .15) 42%, rgba(34, 32, 29, .18) 70%, rgba(34, 32, 29, .3)); }
 #cover.open .drape.left { transform: translateX(-101%); }
 #cover.open .drape.right { transform: translateX(101%); }
 
-.cover-text {
-  position: absolute; left: 0; right: 0; top: calc(env(safe-area-inset-top) + 8.5svh); z-index: 2; pointer-events: none; text-align: center;
-  transition: opacity .7s var(--ease-out), transform 1s var(--ease-out), filter .7s var(--ease-out);
-}
-#cover.open .cover-text { opacity: 0; transform: translateY(-12px); filter: blur(5px); }
+/* содержимое заставки в колонке шириной как приглашение */
+.cover-in { position: absolute; z-index: 2; top: 0; bottom: 0; left: 50%; width: min(100vw, 560px); transform: translateX(-50%); pointer-events: none; color: #FBF6EE; }
 .cover-date {
-  padding-left: .2em; /* компенсация трекинга, чтобы центр был по центру */
-  font: 500 clamp(30px, 8.6vw, 46px)/1 var(--display); letter-spacing: .2em; font-variant-numeric: lining-nums;
-  text-shadow: 0 1px 2px rgba(24, 18, 14, .5), 0 2px 24px rgba(24, 18, 14, .45);
+  position: absolute; left: 9.4%; top: 23%;
+  font: 400 15px/1 var(--sans); letter-spacing: .22em; text-shadow: 0 1px 10px rgba(20, 16, 12, .35);
+  opacity: 0; transform: translateY(8px); transition: opacity 1s var(--ease-out) .5s, transform 1.2s var(--ease-out) .5s;
 }
-/* цифры выезжают из-под маски по очереди */
-#cover .ch { display: inline-block; overflow: hidden; vertical-align: top; padding: .02em .03em .14em; margin: 0 -.03em -.14em; }
-#cover .ch > span {
-  display: inline-block; transform: translate3d(0, 112%, 0) rotate(6deg); transform-origin: 0 100%;
-  transition: transform 1.1s var(--ease-out) calc(300ms + var(--i) * 40ms);
+.cover-names { position: absolute; left: 6.5%; top: 31%; width: min(56%, 46svh); aspect-ratio: 4476 / 4304; filter: drop-shadow(0 2px 14px rgba(20, 16, 12, .28)); }
+.cover-names img { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* инициалы пишутся слева направо, как на сцене */
+.cover-names .ln1, .cover-names .ln2 {
+  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%); mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+  -webkit-mask-size: 250% 100%; mask-size: 250% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: 100% 0; mask-position: 100% 0;
 }
-#cover.ready .ch > span { transform: none; }
+.cover-names .and { opacity: 0; }
+#cover.ready .cover-names .ln1 { animation: write 1.4s .75s cubic-bezier(.45, .1, .35, 1) forwards; }
+#cover.ready .cover-names .and { animation: fade .6s 1.75s ease forwards; }
+#cover.ready .cover-names .ln2 { animation: write 1.5s 1.9s cubic-bezier(.45, .1, .35, 1) forwards; }
+#cover.ready .cover-date { opacity: 1; transform: none; }
 
-/* сургучная печать по центру шва */
-.seal {
-  position: absolute; z-index: 3; left: 50%; top: 48%; width: min(40vw, 27svh, 200px); aspect-ratio: 720 / 739;
-  padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
-  transform: translate(-50%, -50%) scale(.96); opacity: 0;
-  filter: drop-shadow(0 10px 14px rgba(20, 12, 8, .38)) drop-shadow(0 2px 3px rgba(20, 12, 8, .28));
-  transition: opacity .9s var(--ease-out) .25s, transform 1.1s var(--ease-out) .25s;
-}
-#cover.ready .seal { opacity: 1; transform: translate(-50%, -50%); }
-.seal img { display: block; width: 100%; height: 100%; transition: transform .2s var(--ease-out); }
-.seal:active img { transform: scale(.97); }
-.seal:focus-visible { outline: 2px solid var(--on-velvet); outline-offset: 6px; border-radius: 50%; }
-#cover.open .seal { opacity: 0; transform: translate(-50%, -50%) scale(.94); transition: opacity .45s ease, transform .45s ease; }
-
+/* «Открыть приглашение»: проявляется, потом мягко дышит и по буквам пробегает блик */
 .btn-open {
-  position: absolute; z-index: 3; left: 50%; top: calc(48% + min(20vw, 13.5svh, 100px) + 30px); transform: translateX(-50%); overflow: hidden;
-  display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 30px; border-radius: 999px;
-  background: rgba(255, 244, 234, .14); color: var(--on-velvet); border: 1px solid rgba(255, 244, 234, .55);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  font: 600 13px/1 var(--sans); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; cursor: pointer;
-  text-shadow: 0 1px 8px rgba(24, 18, 14, .35);
-  opacity: 0; transition: opacity .8s, transform .25s var(--ease-out), background-color .3s, color .3s;
+  position: absolute; left: 9.4%; top: 82%; transform-origin: 0 50%; pointer-events: auto;
+  min-height: 44px; padding: 10px 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  font: 400 17px/1.2 var(--sans); letter-spacing: .02em; white-space: nowrap;
+  color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-image: linear-gradient(100deg, #FBF6EE 0 40%, #FFFFFF 47%, #FFE9DE 50%, #FFFFFF 53%, #FBF6EE 60% 100%);
+  background-size: 300% 100%; background-position: 100% 0;
+  filter: drop-shadow(0 1px 8px rgba(20, 16, 12, .4));
+  opacity: 0; transition: opacity 1s var(--ease-out);
 }
-#cover.ready .btn-open { opacity: 1; transition-delay: .9s, 0s, 0s, 0s; animation: breathe 2.8s ease-in-out 1.9s infinite; }
-/* мягко увеличивается и по ней пробегает блик */
+#cover.ready .btn-open { opacity: 1; transition-delay: 2.7s; animation: breathe 2.8s ease-in-out 3.5s infinite, glint 2.8s ease-in-out 3.5s infinite; }
 @keyframes breathe { 0%, 100% { scale: 1; } 50% { scale: 1.06; } }
-.btn-open::after {
-  content: ''; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; pointer-events: none;
-  background: linear-gradient(100deg, transparent, rgba(255, 250, 244, .5), transparent); transform: skewX(-18deg);
+@keyframes glint { 0% { background-position: 100% 0; } 45%, 100% { background-position: 0 0; } }
+.btn-open:focus-visible { outline: 2px solid #FBF6EE; outline-offset: 4px; border-radius: 4px; }
+
+/* жаккардовая лента свисает сверху справа */
+.jacquard {
+  position: absolute; top: 0; right: 4%; width: auto; height: min(72svh, calc(min(100vw, 560px) * 1.5));
+  filter: drop-shadow(0 10px 16px rgba(20, 16, 12, .32)) drop-shadow(0 2px 3px rgba(20, 16, 12, .25));
+  transform: translateY(-101%); transition: transform 1.6s cubic-bezier(.2, .75, .2, 1) .1s;
 }
-#cover.ready .btn-open::after { animation: shine 2.8s ease-in-out 1.9s infinite; }
-.btn-open:active { transform: translateX(-50%) scale(.97); }
-.btn-open:focus-visible { outline: 2px solid var(--on-velvet); outline-offset: 3px; }
-@media (hover: hover) and (pointer: fine) { .btn-open:hover { background-color: var(--on-velvet); color: var(--ink); text-shadow: none; } }
-#cover.open .btn-open { opacity: 0; transition-delay: 0s; animation: none; }
+#cover.ready .jacquard { transform: none; }
+
+/* по нажатию: надписи гаснут, лента уходит вместе с правым полотном */
+#cover.open .cover-date, #cover.open .cover-names, #cover.open .btn-open { opacity: 0 !important; transition: opacity .45s ease; transition-delay: 0s !important; }
+#cover.open .btn-open { animation: none; }
+#cover.open .jacquard { transform: translateX(52vw); transition: transform 1.6s cubic-bezier(.5, .05, .2, 1); }
 
 /* ================= общие элементы ================= */
 .page { max-width: 560px; margin: 0 auto; overflow: clip; background: var(--cream); }
@@ -460,9 +459,8 @@ body[data-type] .kids .q { margin: 0 auto 24px; max-width: 17em; font: italic 40
   .rv, .hero .a { filter: none; transform: none; }
   .ribbon .r-eyebrow, .ribbon .r-venue, .ribbon .r-when, .ribbon .r-big { opacity: 1 !important; filter: none !important; }
   .arch > *, .days > * { transform: none !important; }
-  #cover .ch > span { transform: none !important; }
-  .cover-text { filter: none !important; transform: none !important; }
-  #cover .seal { opacity: 1; }
+  .cover-names img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important; }
+  .cover-date { transform: none !important; }
   .draw, .draw-g > *, .arch-line path { stroke-dashoffset: 0 !important; }
   .lettering img { -webkit-mask: none !important; mask: none !important; opacity: 1 !important; }
   .crest-sheen { display: none; }
